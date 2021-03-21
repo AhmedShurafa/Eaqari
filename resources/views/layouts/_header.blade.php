@@ -2,30 +2,11 @@
 <section id="top-bar" class="p-3">
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <i class="fas fa-phone"></i> (617)-555-5555
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <i class="fas fa-envelope-open"></i> contact@btrealestate.co
-            </div>
-            <div class="col-md-4">
-                <div class="social">
-                    <a href="#">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fab fa-pinterest"></i>
-                    </a>
-                </div>
             </div>
         </div>
     </div>
@@ -43,7 +24,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul class="navbar-nav">
                 <li class="nav-item active mr-3">
-                    <a class="nav-link" href="welcome.blade.php">الرئيسية</a>
+                    <a class="nav-link" href="{{route("main")}}">الرئيسية</a>
                 </li>
                 <li class="nav-item mr-3">
                     <a class="nav-link" href="about.html">ماذا عنا</a>

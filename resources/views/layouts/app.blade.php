@@ -28,6 +28,8 @@
 
     <!-- style ar  -->
     <link rel="stylesheet" href="{{asset("assets/css/style_ar.css")}}">
+
+    <link href="https://fonts.googleapis.com/css?family=Almarai&amp;display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -40,5 +42,6 @@
 {{--    <script src="{{asset("assets/js/bootstrap.bundle.min.js")}}"></script>--}}
     <script src="{{asset("assets/js/lightbox.min.js")}}"></script>
     <script src="{{asset("assets/js/main.js")}}"></script>
+    @stack('script')
 </body>
 </html>

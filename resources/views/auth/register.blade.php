@@ -51,11 +51,11 @@
                                     <label for="email" class="col-form-label text-md-right">رقم الهوية</label>
 
                                     <div>
-                                        <input id="number" type="number" min="3" max="10"
-                                               class="form-control @error('number') is-invalid @enderror"
-                                               name="ssn" value="{{ old('number') }}" required>
+                                        <input id="number" type="number"  minlength="9" size="9"
+                                               class="form-control @error('ssn') is-invalid @enderror"
+                                               name="ssn" value="{{ old('ssn') }}" required>
 
-                                        @error('number')
+                                        @error('ssn')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -67,7 +67,7 @@
                                     <label for="email" class="col-form-label text-md-right">رقم الجوال</label>
 
                                     <div>
-                                        <input id="phone" type="number" min="3" max="10"
+                                        <input id="phone" type="number" minlength="10" size="10"
                                                class="form-control @error('phone') is-invalid @enderror"
                                                name="phone" value="{{ old('phone') }}" required>
 
@@ -85,7 +85,7 @@
                                     </label>
 
                                     <div>
-                                        <input id="phone2" type="number" min="3" max="10"
+                                        <input id="phone2" type="number" minlength="10" size="10"
                                                class="form-control @error('phone2') is-invalid @enderror"
                                                name="phone2" value="{{ old('phone2') }}">
 

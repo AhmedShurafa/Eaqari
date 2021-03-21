@@ -35,6 +35,7 @@
                                 <option value="...." selected disabled>اختر نوع المنشأة الخاص بك</option>
                                 <option value="0">حاصل</option>
                                 <option value="1">منزل</option>
+                                <option value="2">الشقة</option>
                             </select>
 
                         </div>
@@ -86,6 +87,7 @@
                                 </label>
                             </div>
                         </div>
+
                         <div class="form-group col-md-6" id="garage">
                             <h5 class="text-capitalize">garage</h5>
                             <div>

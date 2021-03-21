@@ -19,6 +19,8 @@ $factory->define(Apartment::class, function (Faker $faker) {
         'images'      => $faker->imageUrl(),
         'garage'      => '1',
         'furniture'   => '0',
+        'famous'      => rand(0,1),
+        'show'        => rand(0,1),
         'rating'      => '4',
         'status'      => '0',
     ];

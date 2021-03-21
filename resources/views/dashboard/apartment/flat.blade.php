@@ -22,10 +22,11 @@
                             <th>Name</th>
                             <th>Type</th>
                             <th>Size</th>
+                            <th>Bathrooms</th>
                             <th>Price</th>
                             <th>Room Number</th>
-                            <th>Bathrooms</th>
                             <th>Furniture</th>
+                            <th>Floor</th>
                             <th>Address</th>
                             <th>Rating</th>
                             <th>Famous</th>
@@ -43,6 +44,7 @@
                             <th>Room Number</th>
                             <th>Bathrooms</th>
                             <th>Furniture</th>
+                            <th>Floor</th>
                             <th>Address</th>
                             <th>Rating</th>
                             <th>Famous</th>
@@ -75,10 +77,14 @@
                                 <td>{{$apartment->room_number}}</td>
                                 <td>{{$apartment->bathrooms}}</td>
                                 <td>
-                                    <div class="alert alert-info text-center font-weight-bold p-2" role="alert">
+                                    <div class="alert alert-info text-center font-weight-bold p-2"
+                                         style="background-color: #ffa500;color: #FFF" role="alert">
                                         {{$apartment->furniture == 0 ? 'يوجد' : 'لا يوجد'}}
                                     </div>
                                 </td>
+
+                                <th>{{$apartment->floor}}</th>
+
                                 <td>{{Str::limit($apartment->address,20)}}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary">

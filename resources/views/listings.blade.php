@@ -33,7 +33,7 @@
                             @endforeach
                                         <div class="card-img-overlay">
                                             <h2>
-                                                <span class="badge badge-secondary text-white">{{$apartment->price}}</span>
+                                                <span class="badge badge-secondary text-white">$ {{$apartment->price}}</span>
                                             </h2>
                                         </div>
                                         <div class="card-body">

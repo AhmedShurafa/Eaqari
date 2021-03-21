@@ -16,11 +16,11 @@ class CreateApartmentsTable extends Migration
         Schema::create('apartments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("owner_id");
-            $table->enum("type", ['0', '1'])->default(0);
+            $table->enum("type", ['0', '1','2'])->default(0);
             $table->integer("price");
             $table->integer("size");
-            $table->integer("room_number")->default(0);
-            $table->integer("bathrooms")->default(0);
+            $table->integer("room_number")->nullable();
+            $table->integer("bathrooms")->nullable();
             $table->text("address");
             $table->mediumText("description");
             $table->longText("images");
@@ -28,8 +28,9 @@ class CreateApartmentsTable extends Migration
             $table->enum("furniture", ['0', '1'])->default(0);/* off */
 
             $table->enum("rating", ['0', '1','2','3','4','5'])->default(0);/* off */
-            $table->enum("status", ['0', '1'])->default(1);/* on */
+            $table->enum("status", ['0', '1'])->default(0);/* on */
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('owner_id')->references('id')->on('owners')->onDelete('cascade');
         });

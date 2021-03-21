@@ -9,8 +9,15 @@ class MainController extends Controller
 {
 
     public function index(){
-        $apartment = Apartment::with('owner')->orderby('created_at','DESC')->paginate(6);
-        return view('welcome',compact('apartment'));
+        $apartment = Apartment::with('owner')->where(['status'=>'1','famous'=>'0','show'=>'1'])
+            ->orderby('created_at','DESC')->paginate(3);
+
+//        dd($apartment);
+
+        $place= Apartment::with('owner')->where(['status'=>'1','famous'=>'1','show'=>'1'])
+            ->orderby('created_at','DESC')->take(3)->get();
+
+        return view('welcome',compact('apartment','place'));
     }
 
     public function show($id){
@@ -33,6 +40,10 @@ class MainController extends Controller
             ['room_number','>=',$request->bedrooms],
             ['price','>=',$request->price],
         ])->paginate(6);
+
+        if(is_null($apartment)){
+            $apartment = 'لا يوجد';
+        }
         return view('welcome',compact('apartment'));
     }
 

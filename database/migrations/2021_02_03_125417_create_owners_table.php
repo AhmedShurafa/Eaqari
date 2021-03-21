@@ -27,6 +27,7 @@ class CreateOwnersTable extends Migration
             $table->string('instagram')->nullable();
             $table->string('status')->default(0);//0 off
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 

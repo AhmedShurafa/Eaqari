@@ -35,26 +35,30 @@
                                 <option value="...." selected disabled>اختر نوع المنشأة الخاص بك</option>
                                 <option value="0">حاصل</option>
                                 <option value="1">منزل</option>
+                                <option value="2">شقة</option>
                             </select>
-
                         </div>
                         <br>
-
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label for="price" class="text-capitalize">price</label>
                             <input type="number" name="price" class="form-control" required id="price">
                         </div>
 
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label for="size" class="text-capitalize">size</label>
                             <input type="number" name="size" class="form-control" required id="size">
                         </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="floor" class="text-capitalize">رقم الطابق</label>
+                            <input type="number" name="floor" class="form-control" required id="floor">
+                        </div>
                     </div>
 
-                    <div class="form-row">
+                    <div class="form-row" id="all">
                         <div class="form-group col" id="room_number">
                             <label for="room_number" class="text-capitalize">room number</label>
                             <input type="text" name="room_number" class="form-control"
@@ -117,6 +121,7 @@
                     <div class="form-row">
                         <div class="form-group col">
                             <label for="images" class="text-capitalize">images</label>
+                            <h5 style="color: red">* الرجاء ادخال الصور من غير عنوان واضح او معلم واضح أو كتابة الايميل او رقم الجوال ع الصور</h5>
                             <input type="file" name="images[]" required multiple>
                         </div>
                     </div>
@@ -141,14 +146,17 @@
 
         $("#select").change(function () {
             var e = $(this).val();
+
             if (e == 0) {
-                $("#room_number").css('display', 'none');
-                $("#garage").css('display', 'none');
-                // $("#furniture").css('display', 'none');
-            } else {
-                $("#room_number").css('display', 'block');
-                // $("#furniture").css('display', 'block');
-                $("#garage").css('display', 'block');
+                $("#all").css('display', 'none');
+                $("#floor").prop('disabled', true);
+            }else if(e == 1){
+                $("#floor").prop('disabled', true);
+                $("#all").css('display', 'flex');
+            }else{
+                // $("#room_number").attr('disabled', true);
+                $("#floor").prop('disabled', false);
+                $("#all").css('display', 'flex');
             }
         });
 

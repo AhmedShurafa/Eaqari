@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+
     function __construct()
     {
         $this->middleware(function ($request, $next) {
@@ -178,7 +179,7 @@ class UserController extends Controller
             $owner = Owner::findOrFail($id);
             User::where('id',$owner->user_id)->delete();
             $owner->delete();
-            session()->flash('success','Data deleted successfully');
+            session()->flash('success','Data Trashed Successfully');
             return redirect()->route('dashboard.users.index');
 
         } catch (\Throwable $th) {

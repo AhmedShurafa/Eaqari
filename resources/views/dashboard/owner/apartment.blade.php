@@ -46,26 +46,48 @@
                         </tfoot>
                         <tbody>
                         @foreach($apartments as $index => $apartment)
-                            <tr>
-                                <td>{{$index+1}}</td>
-                                <td>{{$apartment->type ? 'منزل' : 'حاصل'}}</td>
+                            <tr style="background-color: {{ $apartment->status == 0 ? '#eee' : '' }}">
+                                <td>
+                                    {{$index+1}}
+                                    <p>{{ $apartment->status == 0 ? 'غير مفعل' : ' مفعل' }}</p>
+                                </td>
+                                <td>
+                                    @if($apartment->type == 0)
+                                        <div class="alert alert-secondary text-center font-weight-bold p-2" role="alert">
+                                            حاصل
+                                        </div>
+                                    @elseif($apartment->type == 1)
+                                        <div class="alert alert-success text-center font-weight-bold p-2" role="alert">
+                                            منزل
+                                        </div>
+                                    @else
+                                        <div class="alert alert-info text-center font-weight-bold p-2" role="alert">
+                                            شقة
+                                        </div>
+                                    @endif
+                                </td>
                                 <td>{{$apartment->size}}</td>
                                 <td>{{$apartment->price}}</td>
                                 <td>{{$apartment->room_number}}</td>
                                 <td>{{$apartment->bathrooms}}</td>
                                 <td>{{Str::limit($apartment->address,30)}}</td>
-                                <td>{{$apartment->rating}}</td>
                                 <td>
-                                    @if($apartment->status == '0')
-                                        <a href="{{route('dashboard.apartment.status',$apartment->id)}}" class="btn btn-warning">
-                                            No Active
+                                    <button type="button" class="btn btn-primary">
+                                        <span class="badge badge-light">{{$apartment->rating}}</span>
+                                    </button>
+                                </td>
+                                <td>
+                                    @if($apartment->show == '0')
+                                        <a href="{{route('dashboard.apartment.owner.status',$apartment->id)}}" class="btn btn-warning">
+                                            إخفاء
                                         </a>
                                     @else
-                                        <a href="{{route('dashboard.apartment.status',$apartment->id)}}" class="btn btn-secondary">
-                                            Active
+                                        <a href="{{route('dashboard.apartment.owner.status',$apartment->id)}}" class="btn btn-secondary">
+                                            عرض
                                         </a>
                                     @endif
                                 </td>
+
                                 <td>
                                     @if(Auth::user()->role == 1)
                                         <a href="{{route('dashboard.apartment.show',$apartment->id)}}"

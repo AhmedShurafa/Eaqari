@@ -23,6 +23,7 @@ class CreateMessagesTable extends Migration
             $table->integer('ssn');
             $table->mediumText('description');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('apartment_id')->references('id')->on('apartments')->onDelete('cascade');

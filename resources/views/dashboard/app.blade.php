@@ -28,9 +28,13 @@
 
     <link rel="stylesheet" href="{{asset("assets/css/style_ar.css")}}">
 
+    <link href="https://fonts.googleapis.com/css?family=Almarai&amp;display=swap" rel="stylesheet">
     @stack('style')
 
     <style>
+        body{
+            font-family: 'Almarai', sans-serif;
+        }
         .table-responsive{
             overflow-x: hidden !important;
         }
@@ -76,16 +80,47 @@
                 </a>
             </li>
             <!-- المنشأت -->
-            <li class="nav-item {{Request::is('dashboard/apartment*') ? 'active' : null }}">
-                <a class="nav-link" href="{{route("dashboard.apartment.index")}}">
-                    <i class="fas fa-user-alt" style="font-size: 20px"></i>
+{{--            <li class="nav-item {{Request::is('dashboard/apartment*') ? 'active' : null }}">--}}
+{{--                <a class="nav-link" href="{{route("dashboard.apartment.index")}}">--}}
+{{--                    <i class="fas fa-user-alt" style="font-size: 20px"></i>--}}
+{{--                    <span style="font-size: 20px">المنشأت</span>--}}
+{{--                </a>--}}
+{{--            </li>--}}
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-house-user" style="font-size: 20px"></i>
                     <span style="font-size: 20px">المنشأت</span>
                 </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item {{Request::is('dashboard/apartment/warehouse') ? 'active' : null }}"
+                           href="{{route('dashboard.apartment.type',1)}}">
+                            <i class="fas fa-warehouse"></i>
+                            <span> الحواصل </span>
+                        </a>
+                        <a class="collapse-item" href="{{route('dashboard.apartment.type',2)}}">
+                        <i class="fas fa-home"></i>
+                            <span>منازل</span>
+                        </a>
+                        <a class="collapse-item" href="{{route('dashboard.apartment.type',3)}}">
+                            <i class="fas fa-building"></i>
+                            <span>شقق</span>
+                        </a>
+                    </div>
+                </div>
             </li>
+
             <li class="nav-item {{Request::is('message*') ? 'active' : null }}">
-            <a class="nav-link" href="{{route("message.index")}}">
-                    <i class="fas fa-envelope" style="font-size: 20px"></i>
-                    <span style="font-size: 20px">الرسائل</span>
+                <a class="nav-link" href="{{route("message.index")}}">
+                        <i class="fas fa-envelope" style="font-size: 20px"></i>
+                        <span style="font-size: 20px">الرسائل</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{Request::is('trash*') ? 'active' : null }}">
+                <a class="nav-link" href="{{route("dashboard.trashed")}}">
+                    <i class="fas fa-trash" style="font-size: 20px"></i>
+                    <span style="font-size: 20px">سلة المحذوفات</span>
                 </a>
             </li>
 {{--            <li class="nav-item">--}}
@@ -106,13 +141,6 @@
                 <a class="nav-link" href="{{route("dashboard.owner")}}">
                     <i class="fas fa-user-alt" style="font-size: 20px"></i>
                     <span style="font-size: 20px">منشئاتي</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{route("message.index")}}">
-                    <i class="fas fa-envelope" style="font-size: 20px"></i>
-                    <span style="font-size: 20px">الرسائل</span>
                 </a>
             </li>
         @endif
