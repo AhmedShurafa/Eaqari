@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dashboard\ApartmentController;
+use App\Http\Controllers\Dashboard\OwnerController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
@@ -16,35 +19,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Auth::routes();
-
+//Auth::routes();
 
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::middleware("auth")->namespace("Dashboard\\")->name("dashboard.")->prefix("dashboard")->group(function (){
+Route::namespace("Dashboard\\")->name("dashboard.")
+         ->prefix("dashboard")->group(function (){
 
     Route::get('/admin', "DashboardController@index")->name("index");
 
-    Route::resource('users','UserController');
-    Route::get('user/status/{row}','UserController@changeStatus')->name("user.status");
+        Route::middleware('auth:web')->group(function(){
+            Route::resource('owners','OwnerController');
+        });
 
+
+    Route::resource('users','UserController');
 
     Route::get('apartment/type/{id}','ApartmentController@typeApartment')->name('apartment.type');
-
 
     Route::resource('apartment','ApartmentController');
 
     Route::get('apartment/famous/{row}','ApartmentController@changeFamous')->name("apartment.famous");
-
-
-    Route::get('apartment/status/admin/{row}','ApartmentController@changeStatus')->name("apartment.admin.status");
-    Route::get('apartment/status/owner/{row}','ApartmentController@Status')->name("apartment.owner.status");
-
-
-    Route::get('show/apartment','ApartmentController@MyApartment')->name('owner');
-    Route::get('edit/apartment/{id}','ApartmentController@edit')->name('owner.edit');
 
     Route::get('trash','DashboardController@getAllTrashed')->name('trashed');
 
@@ -54,6 +50,18 @@ Route::middleware("auth")->namespace("Dashboard\\")->name("dashboard.")->prefix(
 
     Route::get('restore/message/{id}','DashboardController@restoreMessage')->name('restore.message');
 
+    Route::get('restore/Transaction/{id}','DashboardController@restoreTransaction')->name('restore.Transaction');
+
+    Route::resource('transaction','TransactionController');
+
+
+    Route::middleware('auth:owner')->group(function(){
+        //Owner
+        Route::get('owner/apartment/{id}','ApartmentController@MyApartment')->name('owner');
+
+        Route::get('edit/apartment/{id}','ApartmentController@edit')->name('owner.edit');
+
+    });
 });
 
 Route::resource('message','Dashboard\MessageController');
@@ -63,3 +71,20 @@ Route::get('/','MainController@index')->name("main");
 Route::get('/house/{id}','MainController@show')->name("house");
 Route::get('/houses','MainController@showAll')->name("house.all");
 Route::get('search/houses','MainController@search')->name("house.search");
+
+Route::get('/famous','MainController@famous')->name("famous");
+
+
+
+// Test
+Route::get('login',[LoginController::class, 'login'])->name('login');
+Route::post('login',[LoginController::class, 'handleLogin'])->name('user.handleLogin');
+Route::post('logout',[LoginController::class, 'logout'])->name('logout');
+Route::post('logoutOwner',function (){
+    Auth::guard('owner')->logout();
+    return redirect('/');
+})->name('logoutOwner');
+Route::post('logoutCustomer',function (){
+    Auth::guard('customer')->logout();
+    return redirect('/');
+})->name('logoutCustomer');

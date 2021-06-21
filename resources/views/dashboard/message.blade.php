@@ -7,6 +7,7 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div>
+            {{-- <h1 class="h3 mb-4 text-gray-800 d-inline-block">الرسائل</h1> --}}
             <h1 class="h3 mb-4 text-gray-800 d-inline-block">الرسائل</h1>
         </div>
 
@@ -16,30 +17,28 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            @if(Auth::user()->role == 1)
-                                <th>Owner</th>
-                            @endif
-                            <th>Apartment</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Ssn</th>
-                            <th>Action</th>
+                            <th>#</th>
+                            <th>المستثمر</th>
+                            <th>العقار</th>
+                            <th>اسم الزبون</th>
+                            <th>إيميل الزبون</th>
+                            <th>رقم جوال الزبون</th>
+                            <th>رقم الهوية</th>
+                            <th>الرسالة</th>
+                            <th>الحدث</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>ID</th>
-                            @if(Auth::user()->role == 1)
-                                <th>Owner</th>
-                            @endif
-                            <th>Apartment</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Ssn</th>
-                            <th>Action</th>
+                            <th>#</th>
+                            <th>المستثمر</th>
+                            <th>العقار</th>
+                            <th>اسم الزبون</th>
+                            <th>إيميل الزبون</th>
+                            <th>رقم جوال الزبون</th>
+                            <th>رقم الهوية</th>
+                            <th>الرسالة</th>
+                            <th>الحدث</th>
                         </tr>
                         </tfoot>
                         <tbody>
@@ -48,21 +47,18 @@
                                 <td>{{$index+1}}</td>
 
                                 @if(Auth::user()->role == 1)
-                                    <td>{{$message->owner->user->name}}</td>
+                                    <td>{{$message->owner->name}}</td>
                                 @endif
                                 <td>
-                                    @if($message->apartment->type == 0)
-                                        حاصل
-                                    @else
-                                        منزل
-                                    @endif
+                                    {{$message->apartment->Property->name}}
                                 </td>
-                                <td>{{$message->name}}</td>
-                                <td>{{$message->email}}</td>
-                                <td>{{$message->phone}}</td>
-                                <td>{{$message->ssn}}</td>
+                                <td>{{$message->customer->name}}</td>
+                                <td>{{$message->customer->email}}</td>
+                                <td>{{$message->customer->phone}}</td>
+                                <td>{{$message->customer->ssn}}</td>
+                                <td>{{$message->description}}</td>
                                 <td>
-                                    <a href="{{route("message.show",$message->id)}}}}"
+                                    <a href="{{route("message.show",$message->id)}}"
                                        class="btn btn-success text-white shadow">
                                         <i class="fa fa-eye"></i>
                                         Show

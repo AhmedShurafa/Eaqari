@@ -27,9 +27,9 @@
                                     <label class="sr-only">نوع المنشأة</label>
                                     <select name="type_place" class="form-control" id="place">
                                         <option selected="true" disabled="disabled">نوع المنشأة</option>
-                                        <option value="0">حاصل</option>
-                                        <option value="1">منزل</option>
-                                        <option value="2">شقة</option>
+                                        @foreach($property as $value)
+                                            <option value="{{$value->id}}">{{$value->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -79,11 +79,11 @@
     </section>
 
 {{--    {{dd(($place == "[]"))}}--}}
-    @if($place != "[]")
+    @if(isset($place))
         <section id="listings" class="py-5">
         <div class="container">
             <h3 class="text-center mb-3">
-                <a href="#" class="text-decoration-none">المناطق المشهورة</a>
+                <a href="{{route('famous')}}" class="text-decoration-none">المناطق المشهورة</a>
             </h3><!-- Max Price-->
             <div class="row">
                 <!-- Listing 1 -->
@@ -137,7 +137,7 @@
                                 <hr>
                                 <div class="row py-2 text-secondary">
                                     <div class="col-12">
-                                        <i class="fas fa-user"></i> {{$value->owner->user->name}}</div>
+                                        <i class="fas fa-user"></i> {{$value->owner->name}}</div>
                                 </div>
                                 <div class="row text-secondary pb-2">
                                     <div class="col-6">
@@ -164,18 +164,19 @@
                 <!-- Listing 1 -->
                 {{--      @if(is_null($apartment))--}}
                 @foreach($apartment as $value)
+{{--                    {{$value}}--}}
                     <div class="col-md-6 col-lg-4 mb-4">
                         <div class="card listing-preview">
                             @forelse(json_decode($value->images) as $key)
                                 @if($loop->first)
                                     <img class="card-img-top figure-img rounded" style="height: 250px;"
                                          src="{{asset($key)}}" alt="">
-                                @else
                                     @break
                                 @endif
                             @empty
                                 'لا يوجد'
                             @endforelse
+
                             <div class="card-img-overlay">
                                 <h2>
                                     <span class="badge badge-secondary text-white">$ {{$value->price}}</span>
@@ -204,7 +205,7 @@
                                 <hr>
                                 <div class="row py-2 text-secondary">
                                     <div class="col-12">
-                                        <i class="fas fa-user"></i> {{$value->owner->user->name}}</div>
+                                        <i class="fas fa-user"></i> {{$value->owner->name}}</div>
                                 </div>
                                 <div class="row text-secondary pb-2">
                                     <div class="col-6">

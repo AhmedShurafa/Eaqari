@@ -8,7 +8,7 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
         <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">عرض معلومات السمسار</h1>
+        <h1 class="h3 mb-4 text-gray-800">تعديل المعلومات الشخصية</h1>
 
         <div class="card shadow mb-4 p-3">
             <div class="card-body">
@@ -27,55 +27,49 @@
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="name">Name</label>
+                            <label for="name">الاسم</label>
                             <input type="text" name="name" class="form-control" value="{{$user->name}}" id="name">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="email">Email</label>
+                            <label for="email">البريد الإلكتروني</label>
                             <input type="text" name="email" class="form-control" value="{{$user->email}}" id="email">
                         </div>
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label for="ssn" class="text-capitalize">ssn</label>
-                            <input type="number" name="ssn" class="form-control" value="{{$user->owner->ssn}}" id="ssn">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="phone" class="text-capitalize">phone</label>
-                            <input type="text" name="phone" class="form-control" value="{{$user->owner->phone}}" id="phone">
+                            <label for="phone" class="text-capitalize">رقم الجوال</label>
+                            <input type="text" name="phone" class="form-control" value="{{$user->phone}}" id="phone">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="instagram" class="text-capitalize">phone2</label>
-                            <input type="text" name="phone2" class="form-control" value="{{$user->owner->phone2}}" id="phone">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="facebook" class="text-capitalize">facebook</label>
-                            <input type="text" class="form-control" name="facebook" value="{{$user->owner->facebook}}" id="facebook">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="instagram" class="text-capitalize">instagram</label>
-                            <input type="text" class="form-control" name="instagram" value="{{$user->owner->instagram}}" id="instagram">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="twitter" class="text-capitalize">twitter</label>
-                            <input type="text" class="form-control" name="twitter" value="{{$user->owner->twitter}}" id="twitter">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="image" class="text-capitalize">image</label>
+                            <label for="image" class="text-capitalize">الصورة الشخصية</label>
                             <input type="file" class="form-control" name="image" id="image">
-                            <img id="blah" src="{{asset($user->owner->image)}}" alt="your image" class="img-thumbnail w-50"/>
+                            <img id="blah" src="{{asset($user->image)}}" alt="your image" class="img-thumbnail w-50"/>
                         </div>
                     </div>
+
+                    <hr>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="phone" class="text-capitalize">كلمة السر الحالية</label>
+                            <input type="password" name="current_password" class="form-control"  id="phone">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="phone" class="text-capitalize">كلمة السر الجديدة</label>
+                            <input type="password" name="password" class="form-control" id="phone">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="phone" class="text-capitalize">
+                                 تأكيد كلمة السر الجديدة
+                            </label>
+                            <input type="password" name="password_confirmation" class="form-control" id="phone">
+                        </div>
+                    </div>
+
+                    <hr>
 
                     <div class="form-row">
                         <div class="form-group col-md-12 text-left">

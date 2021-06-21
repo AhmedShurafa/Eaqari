@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -100,8 +101,15 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::with('owner')->findOrFail($id);
-        return view("dashboard.User.profile",compact('user'));
+        if (Auth::guard('web')->check()){
+            $user = User::findOrFail($id);
+            return view("dashboard.User.show",compact('user'));
+
+        }else{
+            $owner = Owner::findOrFail($id);
+//            dd($user);
+            return view("dashboard.User.profile",compact('owner'));
+        }
     }
 
     /**
@@ -125,46 +133,75 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-//        $validator = $request->validate($this->role());
+        if (Auth::guard('web')->check()){
 
-//        if($validator->fails()) {
-//            return redirect()->route('dashboard.users.index')
-//                ->withErrors($validator)
-//                ->withInput();
-//        }
+            $user = User::findOrFail($id);
 
-        if($request->hasfile('image')){
-            $image = $request->file('image');
-            $image_new_name = time() .'.'. $image->getClientOriginalExtension();//Getting Image Extension
-            $image->move("public/avatars/",$image_new_name);
-            $filePath = "public/avatars/" . $image_new_name;
+            if($request->hasfile('image')){
+                $image = $request->file('image');
+                $image_new_name = time() .'.'. $image->getClientOriginalExtension();//Getting Image Extension
+                $image->move("public/avatars/",$image_new_name);
+                $filePath = "public/avatars/" . $image_new_name;
+            }
+
+            if (isset($request->password)){
+                if (!Hash::check($request->current_password, $user->password)) {
+                    return back()->with('error', 'Current password does not match!');
+                }
+                $data['password'] = Hash::make($request->password);
+            }else{
+                $data = $request->except('password','current_password','password_confirmation');
+            }
+
+            $data['image'] = isset($filePath) ? $filePath : $user->image;
+            $user->update($data);
+
+            session()->flash('success','Data Update Successfully');
+            return view("dashboard.User.show",compact('user'));
+
+        }else{
+            $validator = Validator::make($request->all(), [
+                'name'      => 'required|min:2',
+                'email'     => 'required|email|'.Rule::unique('owners')->ignore(Auth::guard('owner')->user()->id),
+                'password'  => 'confirmed',
+                'phone'     => 'required|string',
+                'phone2'    => 'required|string',
+                'ssn'       => 'required|integer',
+//                'image'     => 'mimes:jpeg,png',
+            ]);
+
+            if($request->hasfile('image')){
+                $imageOwner = $request->file('image');
+                $image_new_Owner = time() .'.'. $imageOwner->getClientOriginalExtension();//Getting Image Extension
+                $imageOwner->move("public/avatars/",$image_new_Owner);
+                $filePath = "public/avatars/" . $image_new_Owner;
+            }
+
+            $owner = Owner::findOrFail($id);
+
+            if($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+            if (isset($request->password)){
+                if (!Hash::check($request->current_password, $owner->password)) {
+                    return back()->with('error', 'Current password does not match!');
+                }
+
+                $data['password'] = Hash::make($request->password);
+            }else{
+
+                $data = $request->except('password','current_password','password_confirmation');
+            }
+
+            $data['image'] = isset($filePath) ? $filePath : $owner->image;
+            $owner->update($data);
+
+            session()->flash('success','Data Update Successfully');
+            return view("dashboard.User.profile",compact('owner'));
         }
-
-
-        $user = User::findOrFail($id);
-        $user->name = $request['name'];
-        $user->email = $request['email'];
-        $user->save();
-
-        $owner = Owner::findOrFail($user->owner->id);
-        $owner->user_id = $user->id;
-        $owner->phone = $request->phone;
-        $owner->phone2 = $request->phone2;
-        $owner->ssn = $request->ssn;
-        $owner->image = isset($filePath) ? $filePath : $owner->image;
-        $owner->facebook = $request->facebook;
-        $owner->instagram = $request->instagram;
-        $owner->twitter = $request->twitter;
-        $owner->save();
-
-
-//        dd($user->id);
-        if (Auth::user()->role == 0){
-            return redirect()->route('dashboard.users.show',$user->id);
-        }
-
-        session()->flash('success','Data Update Successfully');
-        return redirect()->route('dashboard.users.index');
     }
 
     /**
@@ -195,40 +232,20 @@ class UserController extends Controller
             'phone'     => 'required|string',
             'phone2'    => 'required|string',
             'ssn'       => 'required|integer',
-            'facebook'  => 'nullable|string',
-            'instagram' => 'nullable|string',
-            'twitter'   => 'nullable|string',
             'image'     => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
     }
     private function role(){
+
+        $user = Owner::find(Auth::guard('owner')->user())->first();
+
         return request()->validate([
             'name'      => 'required|min:2',
-            'email'     => 'required|email',
+            'email'     => 'required|email|'.Rule::unique('owners')->ignore($user->id),
             'phone'     => 'required|string',
             'phone2'    => 'required|string',
             'ssn'       => 'required|integer',
-            'facebook'  => 'nullable|string',
-            'instagram' => 'nullable|string',
-            'twitter'   => 'nullable|string',
             'image'     => 'sometimes|files|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
-    }
-
-    public function changeStatus($id)
-    {
-        $user = Owner::where('user_id',$id)->first();
-
-//        dd($user->status);
-
-        if ($user->status == '1'){
-            $user->status = '0';
-        }else{
-            $user->status = '1';
-        }
-        $user->update();
-
-        session()->flash('success','Change Status successfully');
-        return redirect()->back();
     }
 }

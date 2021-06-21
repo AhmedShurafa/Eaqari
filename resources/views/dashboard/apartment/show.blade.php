@@ -28,26 +28,33 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="name">Name</label>
-                            <input type="text" name="name" class="form-control" disabled value="{{$apartment->owner->user->name}}" id="name">
+                            <input type="text" name="name" class="form-control" disabled value="{{$apartment->owner->name}}" id="name">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="email">نوع</label>
                             <select name="type" disabled class="form-control">
-                                <option value="{{$apartment->type}}">{{$apartment->type ? 'منزل' : 'حاصل'}}</option>
+                                <option value="{{$apartment->Property->id}}">{{$apartment->Property->name}}</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group @if(str_contains($apartment->Property->name,'شقة')) col-md-4 @else col-md-6 @endif">
                             <label for="price" class="text-capitalize">price</label>
                             <input type="number" name="price" class="form-control" disabled value="{{$apartment->price}}" id="price">
                         </div>
 
-                        <div class="form-group col-md-6">
+                        <div class="form-group @if(str_contains($apartment->Property->name,'شقة')) col-md-4 @else col-md-6 @endif">
                             <label for="size" class="text-capitalize">size</label>
                             <input type="number" name="size" class="form-control" disabled value="{{$apartment->size}}" id="size">
                         </div>
+
+                        @if(str_contains($apartment->Property->name,'شقة'))
+                            <div class="form-group col-md-4">
+                                <label for="size" class="text-capitalize">floor</label>
+                                <input type="number" name="size" class="form-control" disabled value="{{$apartment->size}}" id="size">
+                            </div>
+                        @endif
                     </div>
 
                     <div class="form-row">
@@ -60,21 +67,6 @@
                             <label for="bathrooms" class="text-capitalize">bathrooms</label>
                             <input type="text" name="bathrooms" class="form-control" disabled
                                    value="{{$apartment->bathrooms}}" id="bathrooms">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="furniture" class="text-capitalize">furniture</label>
-                            <input type="text" class="form-control" disabled value="{{$apartment->furniture}}" id="furniture">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="garage" class="text-capitalize">garage</label>
-                            <input type="text" class="form-control" disabled value="{{$apartment->garage}}" id="garage">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="rating" class="text-capitalize">rating</label>
-                            <input type="text" class="form-control" disabled value="{{$apartment->rating}}" id="rating">
                         </div>
                     </div>
 
@@ -95,9 +87,9 @@
                         <div class="form-group col">
                             <label for="images" class="text-capitalize d-block">images</label>
 {{--                            {{dd(stripos($apartment->images , 'https'))}}--}}
-                            @if(stripos($apartment->images , 'https') !== false)
+                            @if($apartment->images != null)
                                 <img src="{{asset($apartment->images)}}" class="img-thumbnail w-25" alt="">
-                            @else
+{{--                            @else--}}
                                 @foreach(json_decode($apartment->images) as $key=>$value)
                                     <a href="{{asset($value)}}" data-lightbox="home-images">
                                         <img src="{{asset($value)}}" alt="" class="img-fluid w-25">

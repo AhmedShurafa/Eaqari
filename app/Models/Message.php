@@ -9,6 +9,8 @@ class Message extends Model
 {
     use SoftDeletes;
 
+    protected $table = 'messages';
+
     protected $guarded=[];
 
     public function owner(){
@@ -17,5 +19,9 @@ class Message extends Model
 
     public function apartment(){
         return $this->belongsTo('App\Models\Apartment')->withTrashed();
+    }
+
+    public function customer(){
+        return $this->belongsTo('App\Models\Customer');
     }
 }

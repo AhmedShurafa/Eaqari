@@ -21,13 +21,8 @@ class MessageController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role ==1){
-            $messages = Message::with('owner')->get();
-//            dd($messages);
-        }else{
-//            dd(Auth::user()->owner->id);
-            $messages = Message::where('owner_id',Auth::user()->owner->id)->get();
-        }
+
+        $messages = Message::with(['owner','apartment','customer'])->get();
         return view('dashboard.message',compact('messages'));
     }
 
@@ -51,15 +46,13 @@ class MessageController extends Controller
     {
         $request->validate([
             'owner_id'    => 'required',
-            'name'        => 'required',
-            'email'       => 'required|email',
-            'phone'       => 'required|numeric',
-            'ssn'         => 'required|numeric',
+            'apartment_id'=> 'required',
+            'customer_id' => 'required',
             'description' => 'required',
         ]);
 
         $test = $request->except('_token');
-//        dd($test);
+    //    dd($test);
         Message::create($test);
 
         session()->flash('success','Add Successfully');
@@ -72,32 +65,10 @@ class MessageController extends Controller
      * @param  \App\Models\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function show(Message $message)
+    public function show($id)
     {
+        $message = Message::with(['owner','customer','apartment'])->findOrFail($id);
         return view('dashboard.show_message',compact('message'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Message $message)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Message $message)
-    {
-        //
     }
 
     /**

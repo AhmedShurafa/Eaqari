@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Owner;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class OwnerController extends Controller
 {
@@ -15,7 +16,8 @@ class OwnerController extends Controller
      */
     public function index()
     {
-        //
+        $owners = Owner::all();
+        return view('dashboard.owner.user',compact('owners'));
     }
 
     /**
@@ -25,7 +27,7 @@ class OwnerController extends Controller
      */
     public function create()
     {
-        //
+        return __METHOD__;
     }
 
     /**
@@ -34,9 +36,9 @@ class OwnerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($id)
     {
-        //
+        return __METHOD__;
     }
 
     /**
@@ -45,9 +47,10 @@ class OwnerController extends Controller
      * @param  \App\Models\Owner  $owner
      * @return \Illuminate\Http\Response
      */
-    public function show(Owner $owner)
+    public function show($id)
     {
-        //
+        $owner = Owner::findorfail($id);
+        return view("dashboard.User.profile",compact('owner'));
     }
 
     /**
@@ -79,8 +82,16 @@ class OwnerController extends Controller
      * @param  \App\Models\Owner  $owner
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Owner $owner)
+    public function destroy($id)
     {
-        //
+        try {
+            $owner = Owner::findOrFail($id);
+            $owner->delete();
+            session()->flash('success','Data Trashed Successfully');
+            return redirect()->route('dashboard.owners.index');
+
+        } catch (\Throwable $th) {
+            return redirect()->route('properties.index')->with('error', 'Something went wrong!');
+        }
     }
 }

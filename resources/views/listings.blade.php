@@ -58,7 +58,7 @@
                                             <hr>
                                             <div class="row py-2 text-secondary">
                                                 <div class="col-12">
-                                                    <i class="fas fa-user"></i> {{$apartment->owner->user->name}}</div>
+                                                    <i class="fas fa-user"></i> {{$apartment->owner->name}}</div>
                                             </div>
                                             <div class="row text-secondary pb-2">
                                                 <div class="col-6">

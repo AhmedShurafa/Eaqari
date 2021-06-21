@@ -9,10 +9,10 @@
         <div>
             <h1 class="h3 mb-4 text-gray-800 d-inline-block">السماسرة</h1>
 
-            <a href="{{route('dashboard.users.create')}}" class="btn btn-primary float-left">
-                <i class="fa fa-plus"></i>
-                Add User
-            </a>
+{{--            <a href="{{route('dashboard.users.create')}}" class="btn btn-primary float-left">--}}
+{{--                <i class="fa fa-plus"></i>--}}
+{{--                Add User--}}
+{{--            </a>--}}
         </div>
 
         <div class="card shadow mb-4">
@@ -26,8 +26,6 @@
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Ssn</th>
-                            <th>Rating</th>
-                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -38,50 +36,34 @@
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Ssn</th>
-                            <th>Evaluate</th>
-                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                         </tfoot>
                         <tbody>
-                        @foreach($users as $user)
+                        @foreach($owners as $owner)
                             <tr>
-                                <td>{{$user->id}}</td>
-                                <td>{{$user->name}}</td>
-                                <td>{{$user->email}}</td>
-                                <td>{{$user->owner->phone}}</td>
-                                <td>{{$user->owner->ssn}}</td>
+                                <td>{{$owner->id}}</td>
+                                <td>{{$owner->name}}</td>
+                                <td>{{$owner->email}}</td>
+                                <td>{{$owner->phone}}</td>
+                                <td>{{$owner->ssn}}</td>
+{{--                                <td>--}}
+{{--                                    <h3 class="btn btn-primary">--}}
+{{--                                        <span class="badge badge-light">{{$owner->evaluate}}</span>--}}
+{{--                                    </h3>--}}
+{{--                                </td>--}}
                                 <td>
-                                    <h3 class="btn btn-primary">
-                                        <span class="badge badge-light">{{$user->owner->evaluate}}</span>
-                                    </h3>
-                                </td>
-                                <td>
-
-                                    @if($user->owner->status == '0')
-                                        <button class="btn btn-warning">
-                                            No Active
-                                        </button>
-                                    @else
-                                        <button class="btn btn-secondary">
-                                            Active
-                                        </button>
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="{{route('dashboard.users.show',$user->id)}}"
+                                    <a href="{{route('dashboard.owners.show',$owner->id)}}"
                                        class="btn btn-success text-white shadow">
                                         <i class="fa fa-eye"></i>
                                         Show
                                     </a>
-
                                     <button class="btn btn-danger text-white shadow delete"
                                             data-target='#custom-width-modal' data-toggle='modal'
-                                            data-row='{{route("dashboard.users.destroy",$user->owner->id)}}'>
+                                            data-row='{{route("dashboard.owners.destroy",$owner->id)}}'>
                                         <i class="fa fa-trash"></i>
-                                        Delete
+                                        Suspend
                                     </button>
-
                                 </td>
                             </tr>
                         @endforeach

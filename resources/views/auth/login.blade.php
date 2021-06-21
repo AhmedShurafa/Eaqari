@@ -15,7 +15,7 @@
 
             </div>
             <div class="card-body">
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('user.handleLogin') }}" class="ahmed">
                     @csrf
 
                     <div class="form-group">

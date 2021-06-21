@@ -5,7 +5,7 @@
             <div class="col-md-6">
                 <i class="fas fa-phone"></i> (617)-555-5555
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 text-left">
                 <i class="fas fa-envelope-open"></i> contact@btrealestate.co
             </div>
         </div>
@@ -13,30 +13,31 @@
 </section>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top" style="position:relative;">
     <div class="container">
         <a class="navbar-brand" href="{{route("main")}}">
-            <img src="{{asset('assets/img/logo.png')}}" class="logo" alt="">
+            <img src="{{asset('assets/img/sdf.png')}}" class="logo" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul class="navbar-nav">
-                <li class="nav-item active mr-3">
+                <li class="nav-item mr-3 {{Request::is('/') ? 'active' : null }}">
                     <a class="nav-link" href="{{route("main")}}">الرئيسية</a>
                 </li>
-                <li class="nav-item mr-3">
+                <li class="nav-item mr-3 {{Request::is('about') ? 'active' : null }}">
                     <a class="nav-link" href="about.html">ماذا عنا</a>
                 </li>
-                <li class="nav-item mr-3">
+                <li class="nav-item mr-3 {{Request::is('houses') ? 'active' : null }}">
                     <a class="nav-link" href="{{route('house.all')}}">احدث المنشأت</a>
                 </li>
             </ul>
 
             <ul class="navbar-nav account">
-                @guest
-                    <li class="nav-item">
+{{--                @guest('web')--}}
+                @if(!Auth::guard('customer')->check())
+                <li class="nav-item {{Request::is('login') ? 'active' : null }}">
                         <a class="nav-link" href="{{ route('login') }}">
                             <i class="fas fa-sign-in-alt"></i>
                             تسجيل الدخول
@@ -54,7 +55,7 @@
 
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }}
+                            {{Auth::guard('customer')->user()->name}}
                             <i class="fas fa-user"></i>
                         </a>
 
@@ -66,12 +67,13 @@
                                 <i class="fas fa-sign-out-alt"></i>
                             </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            <form id="logout-form" action="{{ route('logoutCustomer') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
                         </div>
                     </li>
-                @endguest
+
+                @endif
             </ul>
         </div>
     </div>

@@ -6,10 +6,12 @@
         <!-- Page Heading -->
         <div>
             <h1 class="h3 mb-4 text-gray-800 d-inline-block">المنشأت</h1>
-{{--            <a href="{{route('dashboard.apartment.create')}}" class="btn btn-primary float-left">--}}
-{{--                <i class="fa fa-plus"></i>--}}
-{{--                Add Apartment--}}
-{{--            </a>--}}
+            @if(Auth::guard('owner')->check())
+                <a href="{{route('dashboard.apartment.create')}}" class="btn btn-primary float-left">
+                    <i class="fa fa-plus"></i>
+                    إضافة منشأة
+                </a>
+            @endif
         </div>
 
         <div class="card shadow mb-4">
@@ -19,28 +21,34 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
+                            @if(Auth::guard('web')->check())
+                                <th>الاسم</th>
+                            @endif
                             <th>Type</th>
+                            <th>Area</th>
                             <th>Size</th>
                             <th>Price</th>
                             <th>Address</th>
-                            <th>Rating</th>
-                            <th>Famous</th>
-                            <th>Active</th>
+                            @if(Auth::guard('web')->check())
+                                <th>مشهور</th>
+                            @endif
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
+                            @if(Auth::guard('web')->check())
+                                <th>الاسم</th>
+                            @endif
                             <th>Type</th>
+                            <th>Area</th>
                             <th>Size</th>
                             <th>Price</th>
                             <th>Address</th>
-                            <th>Rating</th>
-                            <th>Famous</th>
-                            <th>Active</th>
+                            @if(Auth::guard('web')->check())
+                                <th>مشهور</th>
+                            @endif
                             <th>Action</th>
                         </tr>
                         </tfoot>
@@ -48,7 +56,9 @@
                         @foreach($apartments as $apartment)
                             <tr>
                                 <td>{{$apartment->id}}</td>
-                                <td>{{$apartment->owner->user->name}}</td>
+                                @if(Auth::guard('web')->check())
+                                    <td>{{$apartment->owner->name}}</td>
+                                @endif
                                 <td>
                                     @if($apartment->type == 0)
                                         <div class="alert alert-secondary text-center font-weight-bold p-2" role="alert">
@@ -64,45 +74,34 @@
                                         </div>
                                     @endif
                                 </td>
+                                <td>{{$apartment->area->name}}</td>
                                 <td>{{$apartment->size}} متر </td>
                                 <td>{{$apartment->price}} $</td>
                                 <td>{{Str::limit($apartment->address,20)}}</td>
+
+                                @if(Auth::guard('web')->check())
+                                    <td>
+                                        @if($apartment->famous == '0')
+                                            <a href="{{route('dashboard.apartment.famous',$apartment->id)}}" class="btn btn-warning">
+                                                No Active
+                                            </a>
+                                        @else
+                                            <a href="{{route('dashboard.apartment.famous',$apartment->id)}}" class="btn btn-secondary">
+                                                Active
+                                            </a>
+                                        @endif
+                                    </td>
+                                @endif
+
                                 <td>
-                                    <button type="button" class="btn btn-primary">
-                                        <span class="badge badge-light">{{$apartment->rating}}</span>
-                                    </button>
-                                </td>
-                                <td>
-                                    @if($apartment->famous == '0')
-                                        <a href="{{route('dashboard.apartment.famous',$apartment->id)}}" class="btn btn-warning">
-                                            No Active
-                                        </a>
-                                    @else
-                                        <a href="{{route('dashboard.apartment.famous',$apartment->id)}}" class="btn btn-secondary">
-                                            Active
-                                        </a>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($apartment->status == '0')
-                                        <a href="{{route('dashboard.apartment.admin.status',$apartment->id)}}" class="btn btn-warning">
-                                            No Active
-                                        </a>
-                                    @else
-                                        <a href="{{route('dashboard.apartment.admin.status',$apartment->id)}}" class="btn btn-secondary">
-                                            Active
-                                        </a>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if(Auth::user()->role == 1)
+                                    @if(Auth::guard('web')->check())
                                         <a href="{{route('dashboard.apartment.show',$apartment->id)}}"
                                            class="btn btn-success text-white shadow">
                                             <i class="fa fa-eye"></i>
                                             Show
                                         </a>
                                     @else
-                                        <a href="{{route('dashboard.apartment.show',$apartment->id)}}"
+                                        <a href="{{route('dashboard.apartment.edit',$apartment->id)}}"
                                            class="btn btn-info text-white shadow">
                                             <i class="fa fa-edit"></i>
                                             Edit

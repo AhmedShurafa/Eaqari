@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
 class LoginController extends Controller
@@ -41,16 +42,36 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    protected function authenticated(Request $request, $user)
+    public function login()
     {
-        if ( $user->role == 1) {
-//            return redirect()->route('dashboard.index',app()->getLocale());
+        return view('auth.login');
+    }
+
+    public function handleLogin(Request $req)
+    {
+        if(Auth::guard('web')
+            ->attempt($req->only('email','password')))
+        {
             return redirect()->route('dashboard.index');
-        } else if ($user->role == 0) {
-            return redirect()->route('dashboard.owner');
-        } else {
-            Auth::logout();
-            return Redirect::route('main');
+
+        }elseif (Auth::guard('owner')
+            ->attempt($req->only('email','password'))){
+
+            return redirect()->route('dashboard.index');
+
+
+        }elseif (Auth::guard('customer')->attempt($req->only('email','password'))){
+
+            return redirect()->route('main');
         }
+
+        return redirect()->back()
+            ->withErrors('error', 'Invalid Credentials');
+    }
+
+    public function logout()
+    {
+        Auth::guard('web')->logout();
+        return redirect('/');
     }
 }

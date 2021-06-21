@@ -11,7 +11,7 @@
                 <div class="card-body">
                     @csrf
 
-                    <input type="hidden" name="owner_id" class="form-control" value="{{Auth::user()->id}}" id="name">
+                    <input type="hidden" name="owner_id" class="form-control" value="{{Auth::guard('owner')->user()->id}}" id="name">
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -29,32 +29,40 @@
                         </div>
                     @endif
                     <div class="form-row">
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-6">
                             <label for="type">نوع المنشأة</label>
-                            <select name="type" required class="form-control" id="select">
+                            <select name="property_type_id" required class="form-control" id="select">
                                 <option value="...." selected disabled>اختر نوع المنشأة الخاص بك</option>
-                                <option value="0">حاصل</option>
-                                <option value="1">منزل</option>
-                                <option value="2">شقة</option>
+                                @foreach($property as $value)
+                                    <option value="{{$value->id}}">{{$value->name}}</option>
+                                @endforeach
                             </select>
                         </div>
-                        <br>
+                        <div class="form-group col-md-6">
+                            <label for="type">المنطقة</label>
+                            <select name="area_id" required class="form-control" id="select">
+                                <option value="...." selected disabled>اختر المنطقة</option>
+                                @foreach($area as $value)
+                                    <option value="{{$value->id}}">{{$value->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col">
                             <label for="price" class="text-capitalize">price</label>
                             <input type="number" name="price" class="form-control" required id="price">
                         </div>
 
-                        <div class="form-group col-md-4">
+                        <div class="form-group col">
                             <label for="size" class="text-capitalize">size</label>
                             <input type="number" name="size" class="form-control" required id="size">
                         </div>
 
-                        <div class="form-group col-md-4">
+                        <div class="form-group col" id="floor">
                             <label for="floor" class="text-capitalize">رقم الطابق</label>
-                            <input type="number" name="floor" class="form-control" required id="floor">
+                            <input type="number" name="floor" class="form-control" required>
                         </div>
                     </div>
 
@@ -68,41 +76,6 @@
                             <label for="bathrooms" class="text-capitalize">bathrooms</label>
                             <input type="number" name="bathrooms" class="form-control"
                                    value="" id="bathrooms">
-                        </div>
-
-                        <div class="form-group col" id="furniture">
-                            <h5 class="text-capitalize">furniture</h5>
-                            <div>
-                                <input class="form-check-input" type="radio" name="furniture" id="gridRadios1"
-                                       value="1">
-                                <label class="form-check-label mr-4" for="gridRadios1">
-                                    يوجد
-                                </label>
-                            </div>
-                            <div>
-                                <input class="form-check-input" type="radio" name="furniture" id="gridRadios2"
-                                       value="0">
-                                <label class="form-check-label mr-4" for="gridRadios2">
-                                    لا
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group col" id="garage">
-                            <h5 class="text-capitalize">garage</h5>
-                            <div>
-                                <input class="form-check-input" type="radio" name="garage" id="garage1"
-                                       value="1">
-                                <label class="form-check-label mr-4" for="garage1">
-                                    يوجد
-                                </label>
-                            </div>
-                            <div>
-                                <input class="form-check-input" type="radio" name="garage" id="garage2"
-                                       value="0">
-                                <label class="form-check-label mr-4" for="garage2">
-                                    لا
-                                </label>
-                            </div>
                         </div>
                     </div>
 
@@ -147,10 +120,10 @@
         $("#select").change(function () {
             var e = $(this).val();
 
-            if (e == 0) {
+            if (e == 1) {
                 $("#all").css('display', 'none');
                 $("#floor").prop('disabled', true);
-            }else if(e == 1){
+            }else if(e == 3){
                 $("#floor").prop('disabled', true);
                 $("#all").css('display', 'flex');
             }else{

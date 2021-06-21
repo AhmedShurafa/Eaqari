@@ -52,44 +52,39 @@
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
+
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.blade.php">
-            <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
+        <a class="sidebar-brand d-flex align-items-center justify-content-center m-3"
+           href="{{route('dashboard.index')}}">
+            <div class="sidebar-brand-icon">
+                <img src="{{asset('assets/img/logo.png')}}" width="100px" alt="">
             </div>
-            <div class="sidebar-brand-text mx-3">SB Admin</div>
         </a>
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
 
         <!-- Dashboard -->
-        @if(Auth::user()->role == 1)
+{{--        @if(Auth::user()->role == 1)--}}
+        @if(Auth::guard('web')->check())
             <li class="nav-item {{Request::is('dashboard/admin*') ? 'active' : null }}">
                 <a class="nav-link" href="{{route("dashboard.index")}}">
                     <i class="fas fa-fw fa-tachometer-alt" style="font-size: 20px"></i>
-                    <span style="font-size: 20px">الصفحة الرئيسية</span>
+                    <span style="font-size: 16px">الصفحة الرئيسية</span>
                 </a>
             </li>
 
             <!-- السماسرة -->
             <li class="nav-item {{Request::is('dashboard/users*') ? 'active' : null }}">
-                <a class="nav-link" href="{{route("dashboard.users.index")}}">
+                <a class="nav-link" href="{{route("dashboard.owners.index")}}">
                     <i class="fas fa-user-alt" style="font-size: 20px"></i>
-                    <span style="font-size: 20px">المستثمرين</span>
+                    <span style="font-size: 16px">المستثمرين</span>
                 </a>
             </li>
-            <!-- المنشأت -->
-{{--            <li class="nav-item {{Request::is('dashboard/apartment*') ? 'active' : null }}">--}}
-{{--                <a class="nav-link" href="{{route("dashboard.apartment.index")}}">--}}
-{{--                    <i class="fas fa-user-alt" style="font-size: 20px"></i>--}}
-{{--                    <span style="font-size: 20px">المنشأت</span>--}}
-{{--                </a>--}}
-{{--            </li>--}}
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-house-user" style="font-size: 20px"></i>
-                    <span style="font-size: 20px">المنشأت</span>
+                    <span style="font-size: 16px">المنشأت</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -113,16 +108,25 @@
             <li class="nav-item {{Request::is('message*') ? 'active' : null }}">
                 <a class="nav-link" href="{{route("message.index")}}">
                         <i class="fas fa-envelope" style="font-size: 20px"></i>
-                        <span style="font-size: 20px">الرسائل</span>
+                        <span style="font-size: 16px">الرسائل</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{Request::is('dashboard/transaction*') ? 'active' : null }}">
+                <a class="nav-link" href="{{route("dashboard.transaction.index")}}">
+                        <i class="fas fa-file-contract" style="font-size: 20px"></i>
+                        <span style="font-size: 16px">العمليات التجارية</span>
                 </a>
             </li>
 
             <li class="nav-item {{Request::is('trash*') ? 'active' : null }}">
                 <a class="nav-link" href="{{route("dashboard.trashed")}}">
                     <i class="fas fa-trash" style="font-size: 20px"></i>
-                    <span style="font-size: 20px">سلة المحذوفات</span>
+                    <span style="font-size: 16px">سلة المحذوفات</span>
                 </a>
             </li>
+
+
 {{--            <li class="nav-item">--}}
 {{--                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">--}}
 {{--                    <i class="fas fa-fw fa-cog"></i>--}}
@@ -137,11 +141,29 @@
 {{--                </div>--}}
 {{--            </li>--}}
             @else
-            <li class="nav-item {{Request::is('dashboard/show/apartment*') ? 'active' : null }}">
-                <a class="nav-link" href="{{route("dashboard.owner")}}">
-                    <i class="fas fa-user-alt" style="font-size: 20px"></i>
-                    <span style="font-size: 20px">منشئاتي</span>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-house-user" style="font-size: 20px"></i>
+                    <span style="font-size: 16px">منشئاتي</span>
                 </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item {{Request::is('dashboard/apartment/warehouse') ? 'active' : null }}"
+                           href="{{route('dashboard.owner',1)}}">
+                            <i class="fas fa-warehouse"></i>
+                            <span> الحواصل </span>
+                        </a>
+                        <a class="collapse-item" href="{{route('dashboard.owner',2)}}">
+                            <i class="fas fa-home"></i>
+                            <span>منازل</span>
+                        </a>
+                        <a class="collapse-item" href="{{route('dashboard.owner',3)}}">
+                            <i class="fas fa-building"></i>
+                            <span>شقق</span>
+                        </a>
+                    </div>
+                </div>
             </li>
         @endif
         <!-- Divider -->
@@ -159,7 +181,7 @@
     <div id="content-wrapper" class="d-flex flex-column">
 
         <!-- Main Content -->
-        <div id="content">
+        <div id="content" style="display: grid;grid-template-rows: auto 1fr auto;height: 100%;">
 
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -178,13 +200,32 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                            <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+
+                                @if(Auth::guard('web')->check())
+                                    {{ Auth::user()->name }}
+                                @else
+                                    {{ Auth::guard('owner')->user()->name }}
+                                @endif
+                            </span>
+                            <img class="img-profile rounded-circle" src="
+                                @if(Auth::guard('web')->check())
+                                    {{asset(Auth::user()->image)}}
+                                @else
+                                    {{ asset(Auth::guard('owner')->user()->image) }}
+                                @endif
+                                ">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{{route('dashboard.users.update', Auth::id())}}">
+
+                            <a class="dropdown-item" href="{{route('dashboard.users.update',
+
+                            Auth::guard('web')->check() ? Auth::user()->id : Auth::guard('owner')->user()->id
+
+
+                            )}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Profile
                             </a>
@@ -193,15 +234,17 @@
 {{--                                Settings--}}
 {{--                            </a>--}}
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </a>
-                        </div>
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                    <form id="logout-form" action="
+                                                           {{Auth::guard('web')->check() ? route('logout') : route('logoutOwner')}}
+                                                                    " method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </a>
+                            </div>
                     </li>
 
                 </ul>
@@ -216,7 +259,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; Your Website 2021</span>
                     </div>
                 </div>
             </footer>

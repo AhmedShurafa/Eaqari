@@ -8,31 +8,34 @@
     <div class="container">
       <div class="row text-center">
         <div class="col-md-12">
-          <h1 class="display-4" id="name">{{$apartment->type== '0' ? 'حاصل' : 'منزل'}}</h1>
+          <h1 class="display-4" id="name">{{$apartment->Property->name}}</h1>
           <p class="lead">
-            <i class="fas fa-map-marker"></i> {{$apartment->address}}</p>
+            <i class="fas fa-map-marker"></i>{{$apartment->address}}</p>
         </div>
       </div>
     </div>
   </section>
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+
+
   <!-- Listing -->
-  <section id="listing" class="py-4">
+  <section id="listing" class="py-5">
     <div class="container">
-{{--      <a href="listings.html" class="btn btn-light mb-4">Back To Listings</a>--}}
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if(Session::has('success'))
+            <p class="alert alert-info">{{ Session::get('success') }}</p>
+        @endif
       <div class="row">
         <div class="col-md-9">
           <!-- Home Main Image -->
-
-
 
               @foreach(json_decode($apartment->images) as $key=>$value)
                   @if($loop->first)
@@ -64,32 +67,24 @@
                   <i class="fas fa-bath"></i> Bathrooms:
                   <span class="float-right">{{$apartment->bathrooms}}</span>
                 </li>
-                <li class="list-group-item text-secondary">
-                  <i class="fas fa-car"></i> Garage:
-                  <span class="float-right">{{$apartment->garage}}
-                  </span>
-                </li>
+{{--                <li class="list-group-item text-secondary">--}}
+{{--                  <i class="fas fa-car"></i> Garage:--}}
+{{--                  <span class="float-right">{{$apartment->garage}}--}}
+{{--                  </span>--}}
+{{--                </li>--}}
               </ul>
             </div>
             <div class="col-md-6">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item text-secondary">
-                  <i class="fas fa-th-large"></i> Square Feet:
-                  <span class="float-right">{{$apartment->size}}</span>
-                </li>
-                <li class="list-group-item text-secondary">
                   <i class="fas fa-square"></i> Lot Size:
-                  <span class="float-right">2.5 Meter
+                  <span class="float-right">{{$apartment->size}} م
+                      <sup>2</sup>
                   </span>
                 </li>
                 <li class="list-group-item text-secondary">
                   <i class="fas fa-calendar"></i> Listing Date:
                   <span class="float-right">{{$apartment->created_at->format('Y-N-d')}}</span>
-                </li>
-                <li class="list-group-item text-secondary">
-                  <i class="fas fa-bed"></i> Realtor:
-                  <span class="float-right">Kyle Brown
-                  </span>
                 </li>
               </ul>
             </div>
@@ -106,26 +101,31 @@
           <div class="card mb-3">
             <img class="card-img-top" src="{{asset($apartment->owner->image)}}" alt="Seller of the month">
             <div class="card-body">
-              <h5 class="card-title">{{$apartment->owner->user->name}}</h5>
+              <h5 class="card-title">{{$apartment->owner->name}}</h5>
               <div>
-                  @for($i=0;$i < $apartment->rating;++$i)
+                  @for($i=0;$i < $apartment->owner->evaluate;++$i)
                     <span class="fa fa-star checked"></span>
                   @endfor
 
-                  @for($i=0;$i < (5 - $apartment->rating);++$i)
+                  @for($i=0;$i < (5 - $apartment->owner->evaluate);++$i)
                       <span class="fa fa-star"></span>
                   @endfor
               </div>
             </div>
           </div>
+        @if(Auth::guard('customer')->check())
           <button class="btn-primary btn-block btn-lg" id="message" data-owner="{{$apartment->owner->id}}"
                   data-apartment="{{$apartment->id}}" data-toggle="modal"
                   data-target="#inquiryModal">تواصل مع السمسار</button>
+        @else
+        <a class="btn-primary btn-block btn-lg text-center text-decoration-none" href="{{route('login')}}"
+                data-target="#inquiryModal">تواصل مع السمسار</a>
+        @endif
         </div>
       </div>
     </div>
   </section>
-
+@if(Auth::guard('customer')->check())
   <!-- Inquiry Modal -->
   <div class="modal fade" id="inquiryModal" role="dialog">
     <div class="modal-dialog">
@@ -140,30 +140,22 @@
           <form action="{{route('message.store')}}" method="post">
               @csrf
             <div class="form-group">
-              <label for="property_name" class="col-form-label">Property:</label>
-              <input type="text" name="name" class="form-control" value="{{$apartment->type== '0' ? 'حاصل' : 'منزل'}}" id="Name" readonly>
-              <input type="hidden" name="owner_id" id="owner_id" class="form-control" value="7" readonly>
-              <input type="hidden" name="apartment_id" id="apartment_id" class="form-control" value="5" readonly>
+              <label for="property_name" class="col-form-label">المنشأة:</label>
+              <input type="text" class="form-control"
+                     value="{{$apartment->Property->name .' - '. $apartment->Area->name .' - '. $apartment->address }}"
+                     id="Name" readonly>
+              <input type="hidden" name="owner_id" id="owner_id" class="form-control" value="{{$apartment->owner->id}}" readonly>
+              <input type="hidden" name="apartment_id" id="apartment_id" class="form-control" value="{{$apartment->id}}" readonly>
+              <input type="hidden" name="customer_id" id="customer_id" class="form-control" value="
+
+                @if(Auth::guard('customer')->check())
+                    {{Auth::guard('customer')->user()->id}}
+                @endif
+                  " readonly>
             </div>
             <div class="form-group">
-              <label for="name" class="col-form-label">Name:</label>
-              <input type="text" name="name" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="email" class="col-form-label">Email:</label>
-              <input type="email" name="email" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="phone" class="col-form-label">Phone:</label>
-              <input type="number" name="phone" class="form-control" required>
-            </div>
-          <div class="form-group">
-              <label for="phone" class="col-form-label">Ssn:</label>
-              <input type="number" name="ssn" class="form-control" required>
-          </div>
-            <div class="form-group">
-              <label for="message" class="col-form-label">Message:</label>
-              <textarea name="description" class="form-control" required></textarea>
+              <label class="col-form-label">الرسالة</label>
+              <textarea name="description" class="form-control" rows="10" required></textarea>
             </div>
             <hr>
             <input type="submit" value="Send" class="btn btn-block btn-secondary">
@@ -172,20 +164,19 @@
       </div>
     </div>
   </div>
+  @endif
 @include("layouts._footer")
 @endsection
 @push('script')
-    <script>
-        $("#message").click(function () {
-
-
-            var owner = $(this).data('owner');
-            var apartment = $(this).data('apartment');
-            var name = $("#name").va();
-            console.log(name);
-            $('#owner_id').val(owner);
-            $('#apartment_id').val(apartment);
-            $('#Name').val(name);
-        });
-    </script>
+        <script>
+            $("#message").click(function () {
+                var owner = $(this).data('owner');
+                var apartment = $(this).data('apartment');
+                var name = $("#name").va();
+                console.log(name);
+                $('#owner_id').val(owner);
+                $('#apartment_id').val(apartment);
+                $('#Name').val(name);
+            });
+        </script>
 @endpush

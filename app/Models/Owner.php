@@ -4,25 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
-class Owner extends Model
+
+class Owner extends Authenticatable
 {
     use SoftDeletes;
 
-    protected $fillable  = ['user_id','phone','phone2',
-                            'ssn','evaluate','image',
-                            'facebook','twitter','instagram',
-                            'status'];
+    protected $guarded = ['_token'];
 
-    public function user(){
-        return $this->belongsTo('App\User')->withTrashed();
-    }
+    protected $table = "owners";
 
-    public function apartment(){
-        return $this->hasMany('App\Models\Apartment');
+    public function Properties(){
+        return $this->hasMany('App\Models\Properties');
     }
 
     public function messages(){
         return $this->hasMany('App\Models\Message');
+    }
+
+    public function transaction()
+    {
+        return $this->hasMany('App\Models\Transaction');
     }
 }
