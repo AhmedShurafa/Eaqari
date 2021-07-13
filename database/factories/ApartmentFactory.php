@@ -2,11 +2,11 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Models\Apartment;
+use App\Models\Properties;
 use App\Models\Owner;
 use Faker\Generator as Faker;
 
-$factory->define(Apartment::class, function (Faker $faker) {
+$factory->define(Properties::class, function (Faker $faker) {
     return [
         'owner_id'    => Owner::inRandomOrder()->first()->id,
         'type'        => '0',

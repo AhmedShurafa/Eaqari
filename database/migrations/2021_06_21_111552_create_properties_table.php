@@ -30,7 +30,6 @@ class CreatePropertiesTable extends Migration
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
 
-
             $table->foreign('owners_id')->references('id')->on('owners')->onDelete('cascade');
             $table->foreign('areas_id')->references('id')->on('areas')->onDelete('cascade');
             $table->foreign('property_types_id')->references('id')->on('property_types')->onDelete('cascade');

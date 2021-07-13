@@ -17,7 +17,7 @@ class Owner extends Authenticatable
     protected $table = "owners";
 
     public function Properties(){
-        return $this->hasMany('App\Models\Properties');
+        return $this->hasMany('App\Models\Properties','owners_id');
     }
 
     public function messages(){

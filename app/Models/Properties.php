@@ -14,7 +14,7 @@ class Properties extends Model
     protected $guarded=['_token'];
 
     public function owners(){
-        return $this->belongsTo('App\Models\Owner')->withTrashed();
+        return $this->belongsTo('App\Models\Owner','owners_id')->withTrashed();
     }
 
     public function Area(){
@@ -22,7 +22,7 @@ class Properties extends Model
     }
 
     public function Property(){
-        return $this->belongsTo('App\Models\Property_type','property_type_id')->withTrashed();
+        return $this->belongsTo('App\Models\Property_type','property_types_id')->withTrashed();
     }
 
     public function messages(){

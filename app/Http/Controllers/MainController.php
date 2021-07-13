@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Apartment;
+use App\Models\Properties;
 use App\Models\Property_type;
 use Illuminate\Http\Request;
 
@@ -10,31 +10,31 @@ class MainController extends Controller
 {
     public function index(){
 
-        $apartment = Apartment::with('owner')->where('famous','0')
+        $apartment = Properties::with('owner')->where('famous','0')
             ->orderby('created_at','DESC')->paginate(3);
 
-        $place= Apartment::with('owner')->where('famous','1')
+        $place= Properties::with('owner')->where('famous','1')
             ->orderby('created_at','DESC')->take(3)->get();
 
-        $property =Property_type::all();
+        $property = Property_type::all();
 
         return view('welcome',compact('apartment','place','property'));
     }
 
     public function show($id){
-        $apartment = Apartment::with('owner','Property')->findOrFail($id);
+        $apartment = Properties::with('owner','Property')->findOrFail($id);
         return view('listing',compact('apartment'));
     }
 
     public function showAll(){
 
-        $apartments = Apartment::orderby('created_at','DESC')->get();
+        $apartments = Properties::orderby('created_at','DESC')->get();
         return view('listings',compact('apartments'));
     }
 
     public function search(Request $request)
     {
-        $apartment = Apartment::where([
+        $apartment = Properties::where([
             ['address','like','%'.$request->place.'%'],
 //            ['type','=',$request->type_place],
             ['size','>=',$request->size],
@@ -53,7 +53,7 @@ class MainController extends Controller
 
     public function famous()
     {
-        $apartments = Apartment::with('Property','owner')->where('famous','1')->get();
+        $apartments = Properties::with('Property','owner')->where('famous','1')->get();
 //        dd($apartment);
         return view('listings',compact('apartments'));
     }

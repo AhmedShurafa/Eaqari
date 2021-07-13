@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Apartment;
+use App\Models\Properties;
 use App\Models\Customer;
 use App\Models\Owner;
 use App\Models\Transaction;
@@ -31,7 +31,7 @@ class TransactionController extends Controller
     public function create()
     {
         $owners = Owner::all();
-        $apartments = Apartment::all();
+        $apartments = Properties::all();
         $customers = Customer::all();
         return view('dashboard.transaction.create',compact('owners','apartments','customers'));
     }
@@ -70,7 +70,7 @@ class TransactionController extends Controller
     public function edit(Transaction $transaction)
     {
         $owners = Owner::all();
-        $apartments = Apartment::all();
+        $apartments = Properties::all();
         $customers = Customer::all();
         return view('dashboard.transaction.edit',compact('transaction','owners','apartments','customers'));
     }

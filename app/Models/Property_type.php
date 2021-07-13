@@ -9,9 +9,9 @@ class Property_type extends Model
 {
     use SoftDeletes;
 
-    protected $table ="property_type";
+    protected $table ="property_types";
 
     public function apartment(){
-        return $this->hasMany('App\Models\Apartment');
+        return $this->hasMany('App\Models\Properties');
     }
 }

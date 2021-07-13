@@ -9,12 +9,12 @@ class Transaction extends Model
 {
     use SoftDeletes;
 
-    protected $table ='transaction';
+    protected $table ='transactions';
 
     protected $guarded = ['_token'];
 
     public function owners(){
-        return $this->belongsTo('App\Models\Owners')->withTrashed();
+        return $this->belongsTo('App\Models\Owner','owners_id')->withTrashed();
     }
 
     public function Properties(){

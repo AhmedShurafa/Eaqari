@@ -14,11 +14,11 @@ class Message extends Model
     protected $guarded=[];
 
     public function owner(){
-        return $this->belongsTo('App\Models\Owner')->withTrashed();
+        return $this->belongsTo('App\Models\Owner','owners_id')->withTrashed();
     }
 
     public function apartment(){
-        return $this->belongsTo('App\Models\Apartment')->withTrashed();
+        return $this->belongsTo('App\Models\Properties')->withTrashed();
     }
 
     public function customer(){

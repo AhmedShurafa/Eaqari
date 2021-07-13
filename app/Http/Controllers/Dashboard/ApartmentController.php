@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Apartment;
+use App\Models\Properties;
 use App\Models\Area;
 use App\Models\Property_type;
 use App\User;
@@ -19,15 +19,16 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::with('owner')->get();
+        $apartments = Properties::with('owner')->get();
 
         return view("dashboard.apartment.apartment",compact("apartments"));
     }
 
     public function typeApartment($id){
+
         try{
             if ($id == "1"){// حاصل 1
-                $apartments = Apartment::with('owner')->with('Area')
+                $apartments = Properties::with('owner')->with('Area')
                     ->WhereHas('Property',function ($q) use($id){
                         $q->where('id',1);
                     })->get();
@@ -35,7 +36,7 @@ class ApartmentController extends Controller
 
             }elseif ($id=="2"){ //home 3
 
-                $apartments = Apartment::with('owner')->with('Area')
+                $apartments = Properties::with('owner')->with('Area')
                     ->WhereHas('Property',function ($q) use($id){
                         $q->where('id',3);
                     })->get();
@@ -43,7 +44,7 @@ class ApartmentController extends Controller
                 return view("dashboard.apartment.apartment",compact("apartments"));
 
             }elseif ($id=="3"){// flat 2
-                $apartments = Apartment::with('owner')->with('Area')
+                $apartments = Properties::with('owner')->with('Area')
                     ->WhereHas('Property',function ($q) use($id){
                         $q->where('id',2);
                     })->get();
@@ -118,8 +119,6 @@ class ApartmentController extends Controller
                 }
             }
         }
-
-//        $owner_id = Auth::user()->owner->id;
 
         $apartment = $request->all();
         $apartment['images'] = json_encode($data);
@@ -238,23 +237,23 @@ class ApartmentController extends Controller
     public function MyApartment($id){
 
         if ($id == "1"){// حاصل 1
-            $apartments = Apartment::with('owner')->with('Area')
+            $apartments = Properties::with('owner')->with('Area')
                 ->WhereHas('Property',function ($q) use($id){
                     $q->where('id',1);
-                })->where('owner_id',Auth::guard('owner')->user()->id)->get();
+                })->where('owners_id',Auth::guard('owner')->user()->id)->get();
             return view("dashboard.apartment.warehouse",compact("apartments"));
 
         }elseif ($id == "2"){
-            $apartments = Apartment::with('owner')->with('Area')
+            $apartments = Properties::with('owner')->with('Area')
                 ->WhereHas('Property',function ($q) use($id){
                     $q->where('id',3);
-                })->where('owner_id',Auth::guard('owner')->user()->id)->get();
+                })->where('owners_id',Auth::guard('owner')->user()->id)->get();
             return view("dashboard.apartment.apartment",compact("apartments"));
         }elseif ($id="3"){
-            $apartments = Apartment::with('owner')->with('Area')
+            $apartments = Properties::with('owner')->with('Area')
                 ->WhereHas('Property',function ($q) use($id){
                     $q->where('id',2);
-                })->where('owner_id',Auth::guard('owner')->user()->id)->get();
+                })->where('owners_id',Auth::guard('owner')->user()->id)->get();
             return view("dashboard.apartment.flat",compact("apartments"));
         }
     }

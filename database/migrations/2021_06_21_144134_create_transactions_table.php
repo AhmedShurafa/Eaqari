@@ -21,7 +21,7 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('transaction_types_id');
             $table->string('details',255);
             $table->timestamps();
-            $table->timestamp('deleted_id')->nullable();
+            $table->timestamp('deleted_at')->nullable();
 
             $table->foreign('owners_id')->references('id')
                 ->on('owners')->onDelete('cascade');
