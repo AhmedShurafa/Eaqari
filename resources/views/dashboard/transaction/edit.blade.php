@@ -4,7 +4,7 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
         <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">إضافة معاملة</h1>
+        <h1 class="h3 mb-4 text-gray-800">تعديل معاملة</h1>
 
         <div class="card shadow mb-4 p-3">
             <form method="POST" action="{{route("dashboard.transaction.update",$transaction->id)}}" enctype="multipart/form-data">
@@ -29,6 +29,7 @@
                             </div>
                         </div>
                     @endif
+                    {{-- {{ dd($transaction) }} --}}
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -37,7 +38,7 @@
                                     <option value="...." selected disabled>اختر المستثمر</option>
                                 @foreach($owners as $owner)
                                     <option value="{{$owner->id}}"
-                                    @if($transaction->owner_id == $owner->id) selected @endif
+                                    @if($transaction->owners_id == $owner->id) selected @endif
                                     >{{$owner->name}}</option>
                                 @endforeach
                             </select>
@@ -49,7 +50,7 @@
                                 @foreach($apartments as $apartment)
                                     <option value="{{$apartment->id}}"
 
-                                    @if($transaction->apartment_id == $apartment->id) selected @endif
+                                    @if($transaction->properties_id == $apartment->id) selected @endif
                                     >{{$apartment->Property->name}}</option>
                                 @endforeach
                             </select>
@@ -61,7 +62,7 @@
                                 <option value="...." selected disabled>اختر نوع المنشأة الخاص بك</option>
                                 @foreach($customers as $customer)
                                     <option value="{{$customer->id}}"
-                                    @if($transaction->cutomer_id == $customer->id) selected @endif
+                                    @if($transaction->customers_id  == $customer->id) selected @endif
                                     >{{$customer->name}}</option>
                                 @endforeach
                             </select>
@@ -71,8 +72,8 @@
                             <label for="type">نوع المعاملة</label>
                             <select name="transaction_type_id" required class="form-control" id="select">
                                 <option value="...." selected disabled>اختر نوع المنشأة الخاص بك</option>
-                                <option value="1" @if($transaction->transaction_type_id == 1) selected @endif>بيع</option>
-                                <option value="2" @if($transaction->transaction_type_id == 2) selected @endif>إستأجار</option>
+                                <option value="1" @if($transaction->transaction_types_id  == 1) selected @endif>بيع</option>
+                                <option value="2" @if($transaction->transaction_types_id  == 2) selected @endif>إستأجار</option>
                             </select>
                         </div>
 
@@ -82,7 +83,8 @@
 
                         <div class="form-group col-12">
                             <label for="detalis" class="text-capitalize">وصف</label>
-                            <textarea class="form-control" name="detalis" required id="detalis">{{$transaction->detalis}}</textarea>
+                            <textarea class="form-control" name="detalis"
+                            required id="detalis">{{$transaction->details}}</textarea>
                         </div>
                     </div>
                     <div class="form-row">

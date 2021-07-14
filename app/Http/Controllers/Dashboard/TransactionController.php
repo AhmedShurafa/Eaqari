@@ -69,6 +69,8 @@ class TransactionController extends Controller
      */
     public function edit(Transaction $transaction)
     {
+        // dd($transaction);
+
         $owners = Owner::all();
         $apartments = Properties::all();
         $customers = Customer::all();

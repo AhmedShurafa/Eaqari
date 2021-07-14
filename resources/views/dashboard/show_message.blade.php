@@ -9,12 +9,13 @@
         <div>
             <h1 class="h3 mb-4 text-gray-800 d-inline-block">الرسائل</h1>
         </div>
-{{--{{dd($message->apartment_id)}}--}}
+{{-- {{dd($message->properties_id)}} --}}
+
             <div class="card shadow mb-4">
                 <div class="card-body">
                     <div class="form-group">
                         <label for="property_name" class="col-form-label">Property:</label>
-                        <a href="{{route('dashboard.apartment.show',$message->apartment_id)}}
+                        <a href="{{route('dashboard.apartment.show',$message->properties_id)}}
                             ">الذهاب إلى المنشأة</a>
                         <input type="text" name="owner_id" class="form-control"
                                value="{{$message->apartment->Property->name}}" readonly>

@@ -32,11 +32,14 @@ class ApartmentController extends Controller
                     ->WhereHas('Property',function ($q) use($id){
                         $q->where('id',1);
                     })->get();
+
+                    // dd($apartments);
+
                 return view("dashboard.apartment.warehouse",compact("apartments"));
 
             }elseif ($id=="2"){ //home 3
 
-                $apartments = Properties::with('owner')->with('Area')
+                $apartments = Properties::with('owner')->with('area')
                     ->WhereHas('Property',function ($q) use($id){
                         $q->where('id',3);
                     })->get();
@@ -44,7 +47,7 @@ class ApartmentController extends Controller
                 return view("dashboard.apartment.apartment",compact("apartments"));
 
             }elseif ($id=="3"){// flat 2
-                $apartments = Properties::with('owner')->with('Area')
+                $apartments = Properties::with('owner')->with('area')
                     ->WhereHas('Property',function ($q) use($id){
                         $q->where('id',2);
                     })->get();
@@ -78,10 +81,13 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
+
+        // dd($request->owner_id);
+
         if ($request->property_type_id == 1 || $request->property_type_id = 3){
             $validator = $request->validate([
-                'owner_id'   =>'required',
-                'property_type_id'       =>'required',
+                'owners_id'   =>'required',
+                'property_types_id'       =>'required',
                 'price'      =>'required',
                 'size'       =>'required',
                 'address'    =>'required',
@@ -89,8 +95,8 @@ class ApartmentController extends Controller
             ]);
         }else{
             $validator = $request->validate([
-                'owner_id'   =>'required',
-                'property_type_id'       =>'required',
+                'owners_id'   =>'required',
+                'property_types_id'       =>'required',
                 'price'      =>'required',
                 'size'       =>'required',
                 'bathrooms'  =>'required',
@@ -122,7 +128,7 @@ class ApartmentController extends Controller
 
         $apartment = $request->all();
         $apartment['images'] = json_encode($data);
-        Apartment::create($apartment);
+        Properties::create($apartment);
 
 
         session()->flash('success','Data Create Successfully');
@@ -138,7 +144,7 @@ class ApartmentController extends Controller
      */
     public function show($id)
     {
-        $apartment = Apartment::with(['owner','Area'])
+        $apartment = Properties::with(['owner','Area'])
             ->WhereHas('Property')->find($id);
 //        dd($apartment);
 
@@ -153,7 +159,7 @@ class ApartmentController extends Controller
      */
     public function edit($id)
     {
-        $apartment = Apartment::findOrFail($id);
+        $apartment = Properties::findOrFail($id);
         $property = Property_type::all();
         $area = Area::all();
         return view("dashboard.apartment.edit",compact('apartment','property','area'));
@@ -170,16 +176,16 @@ class ApartmentController extends Controller
     {
         if ($request->property_type_id == 1 || $request->property_type_id = 3){
             $validator = $request->validate([
-                'owner_id'   =>'required',
-                'property_type_id'       =>'required',
+                'owners_id'   =>'required',
+                'property_types_id'       =>'required',
                 'price'      =>'required',
                 'size'       =>'required',
                 'address'    =>'required',
             ]);
         }else{
             $validator = $request->validate([
-                'owner_id'   =>'required',
-                'property_type_id'       =>'required',
+                'owners_id'   =>'required',
+                'property_types_id'       =>'required',
                 'price'      =>'required',
                 'size'       =>'required',
                 'bathrooms'  =>'required',
@@ -212,7 +218,7 @@ class ApartmentController extends Controller
         if (!(is_null($request['images']))){
             $apartment['images'] = json_encode($data);
         }
-        Apartment::find($id)->update($apartment);
+        Properties::find($id)->update($apartment);
 
 
         session()->flash('success','Data Update Successfully');
@@ -228,13 +234,15 @@ class ApartmentController extends Controller
      */
     public function destroy($id)
     {
-        Apartment::findOrFail($id)->delete();
+        Properties::findOrFail($id)->delete();
         session()->flash('success','Data Deleted Successfully');
         return redirect()->back();
     }
 
     // Show all Apartment Auth
     public function MyApartment($id){
+
+            // dd(Auth::guard('owner')->user()->id);
 
         if ($id == "1"){// حاصل 1
             $apartments = Properties::with('owner')->with('Area')
@@ -260,7 +268,7 @@ class ApartmentController extends Controller
 
     protected function changeFamous($id)
     {
-        $apartment = Apartment::findOrFail($id);
+        $apartment = Properties::findOrFail($id);
 
         if ($apartment->famous == '1'){
             $apartment->famous = '0';

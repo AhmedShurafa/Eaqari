@@ -23,6 +23,7 @@ class MessageController extends Controller
     {
 
         $messages = Message::with(['owner','apartment','customer'])->get();
+        // dd($messages);
         return view('dashboard.message',compact('messages'));
     }
 
@@ -68,6 +69,7 @@ class MessageController extends Controller
     public function show($id)
     {
         $message = Message::with(['owner','customer','apartment'])->findOrFail($id);
+        // dd($message);
         return view('dashboard.show_message',compact('message'));
     }
 

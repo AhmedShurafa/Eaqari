@@ -52,7 +52,7 @@
                                 </td>
                                 <td>{{$transaction->customer->name}}</td>
                                 <td>{{$transaction->customer->phone}}</td>
-                                <td>{{$transaction->detalis}}</td>
+                                <td>{{ Str::limit ($transaction->details , 30 ,'...') }}</td>
                                 <td>
                                     <a href="{{route("dashboard.transaction.edit",$transaction->id)}}"
                                        class="btn btn-secondary text-white shadow">

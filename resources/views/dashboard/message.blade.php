@@ -46,7 +46,7 @@
                             <tr>
                                 <td>{{$index+1}}</td>
 
-                                @if(Auth::user()->role == 1)
+                                @if(Auth::guard('web')->check())
                                     <td>{{$message->owner->name}}</td>
                                 @endif
                                 <td>
@@ -56,7 +56,7 @@
                                 <td>{{$message->customer->email}}</td>
                                 <td>{{$message->customer->phone}}</td>
                                 <td>{{$message->customer->ssn}}</td>
-                                <td>{{$message->description}}</td>
+                                <td>{{ Str::limit($message->description, 30, '...')  }}</td>
                                 <td>
                                     <a href="{{route("message.show",$message->id)}}"
                                        class="btn btn-success text-white shadow">
@@ -67,7 +67,7 @@
                                             data-target='#custom-width-modal' data-toggle='modal'
                                             data-row='{{route("message.destroy",$message->id)}}'>
                                         <i class="fa fa-trash"></i>
-                                        Delete
+                                        Suspend
                                     </a>
                                 </td>
                             </tr>

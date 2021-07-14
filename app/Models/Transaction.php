@@ -13,15 +13,15 @@ class Transaction extends Model
 
     protected $guarded = ['_token'];
 
-    public function owners(){
+    public function owner(){
         return $this->belongsTo('App\Models\Owner','owners_id')->withTrashed();
     }
 
-    public function Properties(){
-        return $this->belongsTo('App\Models\Properties');
+    public function apartment(){
+        return $this->belongsTo('App\Models\Properties','properties_id');
     }
 
     public function customer(){
-        return $this->belongsTo('App\Models\Customers');
+        return $this->belongsTo('App\Models\Customer','customers_id');
     }
 }

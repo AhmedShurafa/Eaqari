@@ -13,12 +13,12 @@ class Properties extends Model
 
     protected $guarded=['_token'];
 
-    public function owners(){
+    public function owner(){
         return $this->belongsTo('App\Models\Owner','owners_id')->withTrashed();
     }
 
     public function Area(){
-        return $this->belongsTo('App\Models\Area');
+        return $this->belongsTo('App\Models\Area','areas_id');
     }
 
     public function Property(){

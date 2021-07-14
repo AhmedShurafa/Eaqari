@@ -25,11 +25,11 @@
                         </div>
                     @endif
 
-                    <input type="hidden" name="owner_id" value="{{$apartment->owner_id}}">
+                    <input type="hidden" name="owners_id" value="{{$apartment->owners_id}}">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="type">نوع المنشأة</label>
-                            <select name="property_type_id" required class="form-control" id="select">
+                            <select name="property_types_id" required class="form-control" id="select">
                                 <option value="...." selected disabled>اختر نوع المنشأة الخاص بك</option>
                                 @foreach($property as $value)
                                     <option value="{{$value->id}}" @if($apartment->Property->id == $value->id) selected @endif>{{$value->name}}</option>
@@ -38,7 +38,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="type">المنطقة</label>
-                            <select name="area_id" required class="form-control">
+                            <select name="areas_id" required class="form-control">
                                 <option value="...." selected disabled>اختر المنطقة</option>
                                 @foreach($area as $value)
                                     <option value="{{$value->id}}" @if($apartment->area->id == $value->id) selected @endif>{{$value->name}}</option>

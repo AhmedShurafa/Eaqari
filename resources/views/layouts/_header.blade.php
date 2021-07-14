@@ -27,7 +27,7 @@
                     <a class="nav-link" href="{{route("main")}}">الرئيسية</a>
                 </li>
                 <li class="nav-item mr-3 {{Request::is('about') ? 'active' : null }}">
-                    <a class="nav-link" href="about.html">ماذا عنا</a>
+                    <a class="nav-link" href="{{route('about')}}">من نحن</a>
                 </li>
                 <li class="nav-item mr-3 {{Request::is('houses') ? 'active' : null }}">
                     <a class="nav-link" href="{{route('house.all')}}">احدث المنشأت</a>
@@ -36,21 +36,21 @@
 
             <ul class="navbar-nav account">
 {{--                @guest('web')--}}
-                @if(!Auth::guard('customer')->check())
+                @if(!Auth::guard('customer')->check() || Auth::guard('owner')->check())
                 <li class="nav-item {{Request::is('login') ? 'active' : null }}">
                         <a class="nav-link" href="{{ route('login') }}">
                             <i class="fas fa-sign-in-alt"></i>
                             تسجيل الدخول
                         </a>
                     </li>
-                    @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">
+                    {{-- @if (Route::has('register')) --}}
+                        <li class="nav-item {{Request::is('register') ? 'active' : null }}">
+                            <a class="nav-link" href="{{ route('showregister') }}">
                                 <i class="fas fa-user-plus"></i>
                                 تسجيل مستخدم جديد</a>
                             </a>
                         </li>
-                    @endif
+                    {{-- @endif --}}
                 @else
 
                     <li class="nav-item dropdown">

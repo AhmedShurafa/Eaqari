@@ -11,7 +11,7 @@
                 <div class="card-body">
                     @csrf
 
-                    <input type="hidden" name="owner_id" class="form-control" value="{{Auth::guard('owner')->user()->id}}" id="name">
+                    <input type="hidden" name="owners_id" class="form-control" value="{{Auth::guard('owner')->user()->id}}" id="name">
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -31,7 +31,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="type">نوع المنشأة</label>
-                            <select name="property_type_id" required class="form-control" id="select">
+                            <select name="property_types_id" required class="form-control" id="select">
                                 <option value="...." selected disabled>اختر نوع المنشأة الخاص بك</option>
                                 @foreach($property as $value)
                                     <option value="{{$value->id}}">{{$value->name}}</option>
@@ -40,7 +40,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="type">المنطقة</label>
-                            <select name="area_id" required class="form-control" id="select">
+                            <select name="areas_id" required class="form-control" id="select">
                                 <option value="...." selected disabled>اختر المنطقة</option>
                                 @foreach($area as $value)
                                     <option value="{{$value->id}}">{{$value->name}}</option>

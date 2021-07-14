@@ -18,10 +18,10 @@ class Message extends Model
     }
 
     public function apartment(){
-        return $this->belongsTo('App\Models\Properties')->withTrashed();
+        return $this->belongsTo('App\Models\Properties','properties_id')->withTrashed();
     }
 
     public function customer(){
-        return $this->belongsTo('App\Models\Customer');
+        return $this->belongsTo('App\Models\Customer','customers_id');
     }
 }

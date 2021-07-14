@@ -10,14 +10,14 @@
                     <div class="card">
                         <div class="card-header bg-primary text-white">
                             <h4>
-                                <i class="fas fa-user-plus"></i> Register</h4>
+                                <i class="fas fa-user-plus"></i> تسجيل جديد</h4>
                         </div>
                         <div class="card-body">
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
 
                                 <div class="form-group">
-                                    <label for="name" class="col-form-label text-md-right">{{ __('Name') }}</label>
+                                    <label for="name" class="col-form-label text-md-right">الاسم</label>
                                     <div>
                                         <input id="name" type="text"
                                                class="form-control @error('name') is-invalid @enderror" name="name"
@@ -32,7 +32,7 @@
 
                                 <div class="form-group">
                                     <label for="email"
-                                           class="col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                           class="col-form-label text-md-right">البريد الإلكتروني</label>
 
                                     <div>
                                         <input id="email" type="email"
@@ -99,7 +99,7 @@
 
                                 <div class="form-group ">
                                     <label for="password"
-                                           class="col-form-label text-md-right">{{ __('Password') }}</label>
+                                           class="col-form-label text-md-right">كلمة المرور</label>
 
                                     <div>
                                         <input id="password" type="password"
@@ -109,19 +109,45 @@
                                         @error('password')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
-                                    </span>
+                                         </span>
                                         @enderror
                                     </div>
                                 </div>
 
                                 <div class="form-group ">
                                     <label for="password-confirm"
-                                           class="col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                                           class="col-form-label text-md-right">تأكيد كلمة المرور</label>
 
                                     <div>
                                         <input id="password-confirm" type="password" class="form-control"
                                                name="password_confirmation" required autocomplete="new-password">
                                     </div>
+                                </div>
+
+                                <div class="form-group ">
+                                    <label for="password-confirm"
+                                           class="col-form-label text-md-right"> نوع الحساب :</label>
+<br>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="type"
+                                        id="exampleRadios1" value="owner">
+
+                                        <label class="form-check-label" style="margin-right: 20px" for="exampleRadios1">
+                                            مستثمر
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="type" id="exampleRadios2" value="customer">
+                                        <label class="form-check-label" style="margin-right: 20px" for="exampleRadios2">
+                                            زبون
+                                        </label>
+                                    </div>
+                                    @error('type')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <input type="submit" value="Register" class="btn btn-secondary btn-block">
                             </form>

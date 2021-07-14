@@ -91,16 +91,18 @@
                 @foreach($place as $value)
                     <div class="col-md-6 col-lg-4 mb-4">
                         <div class="card listing-preview">
-                            @forelse(json_decode($value->images) as $key)
-                                @if($loop->first)
-                                    <img class="card-img-top figure-img rounded" style="height: 250px;"
-                                         src="{{asset($key)}}" alt="">
-                                @else
-                                    @break
-                                @endif
-                            @empty
-                                'لا يوجد'
-                            @endforelse
+                            @if(!(is_null($value->images)))
+                                @forelse(json_decode($value->images) as $key)
+                                    @if($loop->first)
+                                        <img class="card-img-top figure-img rounded" style="height: 250px;"
+                                            src="{{asset($key)}}" alt="">
+                                    @else
+                                        @break
+                                    @endif
+                                @empty
+                                    'لا يوجد'
+                                @endforelse
+                            @endif
                             <div class="card-img-overlay">
                                 <h2>
                                     <span class="badge badge-secondary text-white">$ {{$value->price}}</span>
@@ -167,16 +169,17 @@
 {{--                    {{$value}}--}}
                     <div class="col-md-6 col-lg-4 mb-4">
                         <div class="card listing-preview">
-                            @forelse(json_decode($value->images) as $key)
-                                @if($loop->first)
-                                    <img class="card-img-top figure-img rounded" style="height: 250px;"
-                                         src="{{asset($key)}}" alt="">
-                                    @break
-                                @endif
-                            @empty
-                                'لا يوجد'
-                            @endforelse
-
+                            @if(!(is_null($value->images)))
+                                @forelse(json_decode($value->images) as $key)
+                                    @if($loop->first)
+                                        <img class="card-img-top figure-img rounded" style="height: 250px;"
+                                            src="{{asset($key)}}" alt="">
+                                        @break
+                                    @endif
+                                @empty
+                                    'لا يوجد'
+                                @endforelse
+                            @endif
                             <div class="card-img-overlay">
                                 <h2>
                                     <span class="badge badge-secondary text-white">$ {{$value->price}}</span>

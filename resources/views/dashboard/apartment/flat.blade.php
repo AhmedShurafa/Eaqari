@@ -6,7 +6,7 @@
         <!-- Page Heading -->
         <div>
             <h1 class="h3 mb-4 text-gray-800 d-inline-block">المنشأت</h1>
-            @if(Auth::guard('owner')->check())
+            @if(!Auth::guard('web')->check())
                 <a href="{{route('dashboard.apartment.create')}}" class="btn btn-primary float-left">
                     <i class="fa fa-plus"></i>
                     إضافة منشأة
@@ -109,7 +109,7 @@
                                             data-target='#custom-width-modal' data-toggle='modal'
                                             data-row='{{route("dashboard.apartment.destroy",$apartment->id)}}'>
                                         <i class="fa fa-trash"></i>
-                                        Delete
+                                        Suspend
                                     </button>
 
                                 </td>

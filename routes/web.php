@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard\ApartmentController;
 use App\Http\Controllers\Dashboard\OwnerController;
 use Illuminate\Http\Request;
@@ -23,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/about', 'MainController@about')->name('about');
 
 Route::namespace("Dashboard\\")->name("dashboard.")
          ->prefix("dashboard")->group(function (){
@@ -80,6 +83,11 @@ Route::get('/famous','MainController@famous')->name("famous");
 Route::get('login',[LoginController::class, 'login'])->name('login');
 Route::post('login',[LoginController::class, 'handleLogin'])->name('user.handleLogin');
 Route::post('logout',[LoginController::class, 'logout'])->name('logout');
+
+Route::get('register', [RegisterController::class,'showRegistrationForm'])->name('showregister');
+Route::post('register', [RegisterController::class,'register'])->name('register');
+
+
 Route::post('logoutOwner',function (){
     Auth::guard('owner')->logout();
     return redirect('/');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\Owner;
 use App\Providers\RouteServiceProvider;
 use App\User;
@@ -42,6 +43,10 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
     /**
      * Get a validator for an incoming registration request.
      *
@@ -55,8 +60,9 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'ssn' => ['required', 'numeric', 'digits:9', 'unique:owners'],
             'phone' => ['required', 'numeric', 'digits:10', 'unique:owners'],
-            'phone2' => ['numeric', 'digits:10', 'unique:owners'],
+            'phone2' => ['numeric', 'digits:10', 'unique:owners','nullable'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'type' => ['required', 'string', 'in:owner,customer'],
         ]);
     }
 
@@ -68,19 +74,29 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        if($data['type'] == "owner")
+        {
+            $owner = Owner::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'phone' => $data['phone'],
+                'phone2' => $data['phone2'],
+                'ssn' => $data['ssn'],
+            ]);
 
-        $owner = Owner::create([
-            'user_id' => $user->id,
-            'phone' => $data['phone'],
-            'phone2' => $data['phone2'],
-            'ssn' => $data['ssn'],
-        ]);
+            return $owner;
 
-        return $user;
+        }elseif($data['type'] == "customer")
+        {
+            $user = Customer::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'phone' => $data['phone'],
+                'ssn' => $data['ssn'],
+            ]);
+            return $user;
+        }
     }
 }

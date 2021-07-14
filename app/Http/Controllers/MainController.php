@@ -57,4 +57,9 @@ class MainController extends Controller
 //        dd($apartment);
         return view('listings',compact('apartments'));
     }
+
+    public function about()
+    {
+        return view('about');
+    }
 }
