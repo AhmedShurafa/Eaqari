@@ -149,7 +149,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <input type="submit" value="Register" class="btn btn-secondary btn-block">
+                                <input type="submit" value="تسجيل جديد" class="btn btn-secondary btn-block">
                             </form>
                         </div>
                     </div>

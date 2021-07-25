@@ -273,12 +273,15 @@
     <script type="text/javascript">
         $("#place").change(function () {
 
-            var type = $(this).val();
+            // var type = $(this).val();
+            var type = $("#place option:selected").text();
 
-            if (type == 0) {
-                $("#rooms").prop('disabled', true);
-                $("#floor").prop('disabled', true);
-            } else if (type == 1) {
+            // console.log($("#place option:selected").text());
+
+            if (type == 'حاصل') {
+                $("#rooms").prop('disabled',true);
+                $("#floor").prop('disabled',true);
+            } else if (type == 'منزل') {
                 $("#rooms").prop('disabled', false);
                 $("#floor").prop('disabled', true);
             } else {

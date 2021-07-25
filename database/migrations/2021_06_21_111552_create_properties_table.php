@@ -25,6 +25,7 @@ class CreatePropertiesTable extends Migration
             $table->integer('bathrooms')->nullable();
             $table->text('address');
             $table->mediumText('description');
+            $table->mediumText('status')->default(0);
             $table->longText('images')->nullable();
             $table->integer('famous')->default(0);
             $table->timestamps();

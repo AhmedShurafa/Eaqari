@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Properties;
 use App\Models\Customer;
 use App\Models\Owner;
+use App\Models\Property_type;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -31,7 +32,7 @@ class TransactionController extends Controller
     public function create()
     {
         $owners = Owner::all();
-        $apartments = Properties::all();
+        $apartments = Property_type::all();
         $customers = Customer::all();
         return view('dashboard.transaction.create',compact('owners','apartments','customers'));
     }
@@ -47,7 +48,7 @@ class TransactionController extends Controller
         Transaction::create($request->all());
 
         session()->flash('success','Add Successfully');
-        return redirect()->back();
+        return redirect()->route('dashboard.transaction.index');
     }
 
     /**
@@ -86,8 +87,6 @@ class TransactionController extends Controller
      */
     public function update(Request $request, Transaction $transaction)
     {
-//        dd($request);
-
         $transaction->update($request->all());
 
         session()->flash('success','update Successfully');

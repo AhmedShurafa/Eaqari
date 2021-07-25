@@ -28,16 +28,6 @@ class MessageController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -46,9 +36,9 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'owner_id'    => 'required',
-            'apartment_id'=> 'required',
-            'customer_id' => 'required',
+            'owners_id'    => 'required',
+            'properties_id'=> 'required',
+            'customers_id' => 'required',
             'description' => 'required',
         ]);
 
@@ -56,7 +46,7 @@ class MessageController extends Controller
     //    dd($test);
         Message::create($test);
 
-        session()->flash('success','Add Successfully');
+        session()->flash('success','تم إرسال الرسالة بنجاح');
         return redirect()->back();
     }
 

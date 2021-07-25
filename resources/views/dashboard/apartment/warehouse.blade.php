@@ -109,7 +109,7 @@
                                     @endif
                                     <button class="btn btn-danger text-white shadow delete d-inline-block"
                                             data-target='#custom-width-modal' data-toggle='modal'
-                                            data-row='{{route("dashboard.apartment.destroy",$apartment->id)}}'>
+                                            data-row='{{route("dashboard.apartment.stauts",$apartment->id)}}'>
                                         <i class="fa fa-trash"></i>
                                         Suspend
                                     </button>

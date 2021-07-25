@@ -31,7 +31,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="type">نوع المنشأة</label>
-                            <select name="property_types_id" required class="form-control" id="select">
+                            <select name="property_types_id" required class="form-control" id="place">
                                 <option value="...." selected disabled>اختر نوع المنشأة الخاص بك</option>
                                 @foreach($property as $value)
                                     <option value="{{$value->id}}">{{$value->name}}</option>
@@ -52,12 +52,12 @@
                     <div class="form-row">
                         <div class="form-group col">
                             <label for="price" class="text-capitalize">price</label>
-                            <input type="number" name="price" class="form-control" required id="price">
+                            <input type="number" name="price" class="form-control" required>
                         </div>
 
                         <div class="form-group col">
                             <label for="size" class="text-capitalize">size</label>
-                            <input type="number" name="size" class="form-control" required id="size">
+                            <input type="number" name="size" class="form-control" require>
                         </div>
 
                         <div class="form-group col" id="floor">
@@ -117,18 +117,22 @@
 
     <script type="text/javascript">
 
-        $("#select").change(function () {
+        $("#place").change(function () {
             var e = $(this).val();
+            var type = $("#place option:selected").text();
+            console.log(type);
 
-            if (e == 1) {
+            if (type == 'حاصل') {
                 $("#all").css('display', 'none');
-                $("#floor").prop('disabled', true);
-            }else if(e == 3){
-                $("#floor").prop('disabled', true);
+                $("#floor").css('display', 'none');
+
+            }else if(type == 'منزل'){
+
+                $("#floor").css('display', 'none');
                 $("#all").css('display', 'flex');
+
             }else{
-                // $("#room_number").attr('disabled', true);
-                $("#floor").prop('disabled', false);
+                $("#floor").css('display', 'block');
                 $("#all").css('display', 'flex');
             }
         });

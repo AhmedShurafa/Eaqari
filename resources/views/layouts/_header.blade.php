@@ -16,7 +16,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top" style="position:relative;">
     <div class="container">
         <a class="navbar-brand" href="{{route("main")}}">
-            <img src="{{asset('assets/img/sdf.png')}}" class="logo" alt="">
+            <img src="{{asset('assets/img/logo.png')}}" class="logo" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
             <span class="navbar-toggler-icon"></span>

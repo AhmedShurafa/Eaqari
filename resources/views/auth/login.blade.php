@@ -3,6 +3,7 @@
 @section("content")
 
 @include("layouts._header")
+
   <section id="login" class="bg-light py-5">
     <div class="container">
       <div class="row">
@@ -10,7 +11,7 @@
           <div class="card">
             <div class="card-header bg-primary text-white">
               <h4>
-                <i class="fas fa-sign-in-alt"></i> {{ __('Login') }}
+                <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
               </h4>
 
             </div>
@@ -26,8 +27,8 @@
 
                         @error('email')
                         <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                            <strong>{{ $message }}</strong>
+                        </span>
                         @enderror
                     </div>
                 </div>

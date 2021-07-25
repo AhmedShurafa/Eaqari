@@ -45,6 +45,8 @@ Route::namespace("Dashboard\\")->name("dashboard.")
 
     Route::get('apartment/famous/{row}','ApartmentController@changeFamous')->name("apartment.famous");
 
+    Route::Delete('apartment/stauts/{row}','ApartmentController@stauts')->name("apartment.stauts");
+
     Route::get('trash','DashboardController@getAllTrashed')->name('trashed');
 
     Route::get('restore/owner/{id}','DashboardController@restoreOwner')->name('restore.owner');
@@ -57,14 +59,16 @@ Route::namespace("Dashboard\\")->name("dashboard.")
 
     Route::resource('transaction','TransactionController');
 
+    //Owner
+    Route::get('owner/apartment/{id}','ApartmentController@MyApartment')->name('owner');
 
-    Route::middleware('auth:owner')->group(function(){
-        //Owner
-        Route::get('owner/apartment/{id}','ApartmentController@MyApartment')->name('owner');
+    Route::get('edit/apartment/{id}','ApartmentController@edit')->name('owner.edit');
 
-        Route::get('edit/apartment/{id}','ApartmentController@edit')->name('owner.edit');
+    Route::get('trashed/apartment','ApartmentController@trashed')->name('owner.trashed');
 
-    });
+    Route::get('restore/apartment/{id}','ApartmentController@restoreApartmentStatus')->name('restore.apartment.status');
+
+
 });
 
 Route::resource('message','Dashboard\MessageController');
@@ -92,6 +96,7 @@ Route::post('logoutOwner',function (){
     Auth::guard('owner')->logout();
     return redirect('/');
 })->name('logoutOwner');
+
 Route::post('logoutCustomer',function (){
     Auth::guard('customer')->logout();
     return redirect('/');

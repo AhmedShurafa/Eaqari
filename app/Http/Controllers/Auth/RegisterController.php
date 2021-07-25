@@ -76,7 +76,7 @@ class RegisterController extends Controller
     {
         if($data['type'] == "owner")
         {
-            $owner = Owner::create([
+            return Owner::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
@@ -85,18 +85,15 @@ class RegisterController extends Controller
                 'ssn' => $data['ssn'],
             ]);
 
-            return $owner;
-
         }elseif($data['type'] == "customer")
         {
-            $user = Customer::create([
+            return Customer::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'phone' => $data['phone'],
                 'ssn' => $data['ssn'],
             ]);
-            return $user;
         }
     }
 }

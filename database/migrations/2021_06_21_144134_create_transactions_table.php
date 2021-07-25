@@ -18,8 +18,8 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('owners_id');
             $table->unsignedBigInteger('properties_id');
             $table->unsignedBigInteger('customers_id');
-            $table->unsignedBigInteger('transaction_types_id');
-            $table->string('details',255);
+            $table->unsignedBigInteger('transaction_types_id')->nullable();
+            $table->string('details',255)->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
 

@@ -144,9 +144,9 @@
               <input type="text" class="form-control"
                      value="{{$apartment->Property->name .' - '. $apartment->Area->name .' - '. $apartment->address }}"
                      id="Name" readonly>
-              <input type="hidden" name="owner_id" id="owner_id" class="form-control" value="{{$apartment->owner->id}}" readonly>
-              <input type="hidden" name="apartment_id" id="apartment_id" class="form-control" value="{{$apartment->id}}" readonly>
-              <input type="hidden" name="customer_id" id="customer_id" class="form-control" value="
+              <input type="hidden" name="owners_id" id="owner_id" class="form-control" value="{{$apartment->owner->id}}">
+              <input type="hidden" name="properties_id" id="apartment_id" class="form-control" value="{{$apartment->id}}">
+              <input type="hidden" name="customers_id" id="customer_id" class="form-control" value="
 
                 @if(Auth::guard('customer')->check())
                     {{Auth::guard('customer')->user()->id}}

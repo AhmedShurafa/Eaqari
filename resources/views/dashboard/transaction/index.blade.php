@@ -57,13 +57,13 @@
                                     <a href="{{route("dashboard.transaction.edit",$transaction->id)}}"
                                        class="btn btn-secondary text-white shadow">
                                         <i class="fa fa-edit"></i>
-                                        Edit
+                                        تعديل
                                     </a>
                                     <a class="btn btn-danger text-white shadow delete"
                                             data-target='#custom-width-modal' data-toggle='modal'
                                             data-row='{{route("dashboard.transaction.destroy",$transaction->id)}}'>
                                         <i class="fa fa-trash"></i>
-                                        Delete
+                                        تعليق
                                     </a>
                                 </td>
                             </tr>

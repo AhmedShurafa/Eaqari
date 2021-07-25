@@ -32,7 +32,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="type">المستثمرين</label>
-                            <select name="owner_id" required class="form-control" id="select">
+                            <select name="owners_id" required class="form-control" id="select">
                                     <option value="...." selected disabled>اختر المستثمر</option>
                                 @foreach($owners as $owner)
                                     <option value="{{$owner->id}}">{{$owner->name}}</option>
@@ -40,18 +40,18 @@
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="type">المنشأئت</label>
-                            <select name="apartment_id" required class="form-control" id="select">
+                            <label for="type">المنشأت</label>
+                            <select name="properties_id" required class="form-control" id="select">
                                 <option value="...." selected disabled>اختر العقار</option>
                                 @foreach($apartments as $apartment)
-                                    <option value="{{$apartment->id}}">{{$apartment->Property->name}}</option>
+                                    <option value="{{$apartment->id}}">{{$apartment->name}}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="form-group col-md-6">
                             <label for="type">الزبون</label>
-                            <select name="cutomer_id" required class="form-control" id="select">
+                            <select name="customers_id" required class="form-control" id="select">
                                 <option value="...." selected disabled>اختر نوع المنشأة الخاص بك</option>
                                 @foreach($customers as $customer)
                                     <option value="{{$customer->id}}">{{$customer->name}}</option>
@@ -61,7 +61,7 @@
 
                         <div class="form-group col-md-6">
                             <label for="type">نوع المعاملة</label>
-                            <select name="transaction_type_id" required class="form-control" id="select">
+                            <select name="transaction_types_id" required class="form-control" id="select">
                                 <option value="...." selected disabled>اختر نوع المنشأة الخاص بك</option>
                                 <option value="1">بيع</option>
                                 <option value="2">إستأجار</option>
@@ -73,8 +73,8 @@
                     <div class="form-row">
 
                         <div class="form-group col-12">
-                            <label for="detalis" class="text-capitalize">وصف</label>
-                            <textarea class="form-control" name="detalis" required id="detalis"></textarea>
+                            <label for="details" class="text-capitalize">وصف</label>
+                            <textarea class="form-control" name="details" required id="details"></textarea>
                         </div>
                     </div>
                     <div class="form-row">

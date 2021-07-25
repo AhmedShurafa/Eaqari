@@ -16,17 +16,18 @@ class DashboardController extends Controller
 
         if(Auth::guard('web')->check()){
             $owner        = Owner::count();
-            $gar          = Properties::count();
-            $home         = '1';
-            $floor        = Properties::count();
+            $gar          = Properties::where('property_types_id',1)->count();
+            $home         = Properties::where('property_types_id',2)->count();
+            $floor        = Properties::where('property_types_id',3)->count();
             $message      = Message::count();
             $transactions = Transaction::count();
             return view('dashboard.index',compact('owner','home','floor','gar','message','transactions'));
         }else{
             $id = Auth::guard('owner')->user()->id;
-            $gar          = Properties::where(['owners_id'=>$id,'property_types_id'=>'1'])->count();
-            $home         = Properties::where(['owners_id'=>$id,'property_types_id'=>'3'])->count();
-            $floor        = Properties::where(['owners_id'=>$id,'property_types_id'=>'2'])->count();
+            // dd($id);
+            $gar          = Properties::where(['owners_id'=>$id,'property_types_id'=>'1'])->where('status','<>','2')->count();
+            $home         = Properties::where(['owners_id'=>$id,'property_types_id'=>'2'])->where('status','<>','2')->count();
+            $floor        = Properties::where(['owners_id'=>$id,'property_types_id'=>'3'])->where('status','<>','2')->count();
             return view('dashboard.index',compact('home','floor','gar'));
         }
     }

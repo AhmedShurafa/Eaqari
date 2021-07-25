@@ -89,15 +89,15 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item {{Request::is('dashboard/apartment/warehouse') ? 'active' : null }}"
-                           href="{{route('dashboard.apartment.type',1)}}">
+                           href="{{route('dashboard.apartment.type','حاصل')}}">
                             <i class="fas fa-warehouse"></i>
                             <span> الحواصل </span>
                         </a>
-                        <a class="collapse-item" href="{{route('dashboard.apartment.type',2)}}">
+                        <a class="collapse-item" href="{{route('dashboard.apartment.type','منزل')}}">
                         <i class="fas fa-home"></i>
                             <span>منازل</span>
                         </a>
-                        <a class="collapse-item" href="{{route('dashboard.apartment.type',3)}}">
+                        <a class="collapse-item" href="{{route('dashboard.apartment.type','شقة')}}">
                             <i class="fas fa-building"></i>
                             <span>شقق</span>
                         </a>
@@ -150,20 +150,27 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item {{Request::is('dashboard/apartment/warehouse') ? 'active' : null }}"
-                           href="{{route('dashboard.owner',1)}}">
+                           href="{{route('dashboard.owner','حاصل')}}">
                             <i class="fas fa-warehouse"></i>
                             <span> الحواصل </span>
                         </a>
-                        <a class="collapse-item" href="{{route('dashboard.owner',2)}}">
+                        <a class="collapse-item" href="{{route('dashboard.owner','منازل')}}">
                             <i class="fas fa-home"></i>
                             <span>منازل</span>
                         </a>
-                        <a class="collapse-item" href="{{route('dashboard.owner',3)}}">
+                        <a class="collapse-item" href="{{route('dashboard.owner','شقق')}}">
                             <i class="fas fa-building"></i>
                             <span>شقق</span>
                         </a>
                     </div>
                 </div>
+            </li>
+
+            <li class="nav-item {{Request::is('dashboard/users*') ? 'active' : null }}">
+                <a class="nav-link" href="{{route("dashboard.owner.trashed")}}">
+                    <i class="fas fa-trash" style="font-size: 20px"></i>
+                    <span style="font-size: 16px">سلة المحذوفات</span>
+                </a>
             </li>
         @endif
         <!-- Divider -->
@@ -205,14 +212,14 @@
                                 @if(Auth::guard('web')->check())
                                     {{ Auth::user()->name }}
                                 @else
-                                    {{ Auth::guard('owner')->user()->name }}
+                                    {{ Auth::guard('owner')->user()->name ?? $owner->name }}
                                 @endif
                             </span>
                             <img class="img-profile rounded-circle" src="
                                 @if(Auth::guard('web')->check())
                                     {{asset(Auth::user()->image)}}
                                 @else
-                                    {{ asset(Auth::guard('owner')->user()->image) }}
+                                    {{ asset(Auth::guard('owner')->user()->image ?? null ) }}
                                 @endif
                                 ">
                         </a>
@@ -222,8 +229,7 @@
 
                             <a class="dropdown-item" href="{{route('dashboard.users.update',
 
-                            Auth::guard('web')->check() ? Auth::user()->id : Auth::guard('owner')->user()->id
-
+                            Auth::guard('web')->check() ? Auth::user()->id : Auth::guard('owner')->user()->id ?? $owner->id
 
                             )}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
