@@ -19,8 +19,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::with(['owner','apartment','customer'])->get();
-//        dd($transactions);
+        $transactions = Transaction::with(['owner','Properties','customer'])->get();
+    //    dd($transactions);
         return view('dashboard.transaction.index',compact('transactions'));
     }
 

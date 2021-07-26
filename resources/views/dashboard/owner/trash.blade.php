@@ -39,7 +39,7 @@
                         <th scope="col">{{$apartment->price}}</th>
                         <th scope="col">{{Str::limit($apartment->address,30)}}</th>
                         <th scope="col">
-                            <a href="{{route('dashboard.restore.apartment.status' , $apartment->id)}}" class="btn btn-warning">
+                            <a href="{{route('dashboard.apartment.restore' , $apartment->id)}}" class="btn btn-warning">
                                 <i class="fas fa-trash-restore"></i>
                                 استرجاع
                             </a>

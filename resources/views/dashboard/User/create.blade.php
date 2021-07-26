@@ -8,11 +8,11 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
         <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">إضافة سمسار</h1>
+        <h1 class="h3 mb-4 text-gray-800">عرض معلومات سمسار</h1>
 
         <div class="card shadow mb-4 p-3">
             <div class="card-body">
-                <form action="{{route("dashboard.users.store")}}" method="POST" enctype="multipart/form-data">
+                <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     @if ($errors->any())
@@ -28,71 +28,43 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="name">Name</label>
-                            <input type="text" name="name" class="form-control" id="name">
+                            <input type="text" name="name" value="{{ $owner->name }}" disabled class="form-control" id="name">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="email">Email</label>
-                            <input type="text" name="email" class="form-control" id="email">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="password" class="text-capitalize">password</label>
-                            <input type="password" name="password" class="form-control" id="password">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="password_confirmation" class="text-capitalize">password confirm</label>
-                            <input type="password" name="password_confirmation" class="form-control" id="password_confirmation">
+                            <input type="text" name="email" value="{{ $owner->email }}" disabled class="form-control" id="email">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="ssn" class="text-capitalize">ssn</label>
-                            <input type="number" name="ssn" class="form-control" id="ssn">
+                            <input type="number" name="ssn" value="{{ $owner->ssn }}" disabled class="form-control" id="ssn">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="ssn" class="text-capitalize">التقييم</label>
+                            <input type="number" name="evaluate" value="{{ $owner->evaluate }}" disabled class="form-control">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="phone" class="text-capitalize">phone</label>
-                            <input type="number" name="phone" class="form-control" id="phone">
+                            <input type="number" name="phone" value="{{ $owner->phone }}" disabled class="form-control" id="phone">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="instagram" class="text-capitalize">phone2</label>
-                            <input type="number" name="phone2" class="form-control" id="phone">
+                            <input type="number" name="phone2" value="{{ $owner->phone2 }}" disabled class="form-control" id="phone">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="facebook" class="text-capitalize">facebook</label>
-                            <input type="text" class="form-control" name="facebook" id="facebook">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="instagram" class="text-capitalize">instagram</label>
-                            <input type="text" class="form-control" name="instagram" id="instagram">
+                            <label for="image" class="text-capitalize">image</label><br>
+                            <img id="blah" src="{{ asset($owner->image) }}" onerror="this.src='{{ asset('avatar/user.png') }}'" alt="your image" class="img-profile w-25"/>
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="twitter" class="text-capitalize">twitter</label>
-                            <input type="text" class="form-control" name="twitter" id="twitter">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="image" class="text-capitalize">image</label>
-                            <input type="file" class="form-control" name="image" id="image">
-                            <img id="blah" src="#" alt="your image" class="img-profile w-25"  style="display: none"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="form-group text-center">
-                            <button type="submit" class="btn btn-success">Add User</button>
-                        </div>
-                    </div>
                 </form>
             </div>
         </div>

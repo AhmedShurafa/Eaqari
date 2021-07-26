@@ -96,14 +96,14 @@
                                         <a href="{{route('dashboard.apartment.edit',$apartment->id)}}"
                                            class="btn btn-info text-white shadow">
                                             <i class="fa fa-edit"></i>
-                                            Edit
+                                            تعديل
                                         </a>
                                     @endif
                                     <button class="btn btn-danger text-white shadow Suspend d-inline-block"
                                             data-target='#custom-width-modal' data-toggle='modal'
                                             data-row='{{route("dashboard.apartment.destroy",$apartment->id)}}'>
                                         <i class="fa fa-trash"></i>
-                                        Suspend
+                                        تعليق
                                     </button>
 
                                 </td>

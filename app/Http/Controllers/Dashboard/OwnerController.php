@@ -50,7 +50,7 @@ class OwnerController extends Controller
     public function show($id)
     {
         $owner = Owner::findorfail($id);
-        return view("dashboard.User.profile",compact('owner'));
+        return view("dashboard.User.create",compact('owner'));
     }
 
     /**

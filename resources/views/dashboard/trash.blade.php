@@ -74,7 +74,7 @@
                         <th scope="col">
                             <a href="{{route('dashboard.restore.apartment' , $apartment->id)}}" class="btn btn-warning">
                                 <i class="fas fa-trash-restore"></i>
-                                Recovery
+                                استرداد
                             </a>
                         </th>
                     </tr>

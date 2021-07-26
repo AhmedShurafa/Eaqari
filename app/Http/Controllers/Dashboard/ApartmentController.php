@@ -41,15 +41,15 @@ class ApartmentController extends Controller
 
                 $apartments = Properties::with('owner')->with('area')
                     ->WhereHas('Property',function ($q) use($id){
-                        $q->where('id',3);
+                        $q->where('id',2);
                     })->get();
 
                 return view("dashboard.apartment.apartment",compact("apartments"));
 
-            }elseif ($id=="3" || $id == "حاصل"){// flat 2
+            }elseif ($id=="3" || $id == "شقة"){// flat 2
                 $apartments = Properties::with('owner')->with('area')
                     ->WhereHas('Property',function ($q) use($id){
-                        $q->where('id',2);
+                        $q->where('id',3);
                     })->get();
                 return view("dashboard.apartment.flat",compact("apartments"));
             }else{
@@ -81,7 +81,7 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->property_type_id == 1 || $request->property_type_id = 3){
+        if ($request->property_types_id == 1 || $request->property_types_id == 2){
             $validator = $request->validate([
                 'owners_id'   =>'required',
                 'property_types_id'       =>'required',
@@ -123,6 +123,7 @@ class ApartmentController extends Controller
             }
         }
 
+
         $apartment = $request->all();
         $apartment['images'] = json_encode($data);
         Properties::create($apartment);
@@ -130,7 +131,7 @@ class ApartmentController extends Controller
 
         session()->flash('success','Data Create Successfully');
 
-        return redirect()->route('dashboard.owner',$request->property_type_id);
+        return redirect()->route('dashboard.owner',$request->property_types_id);
     }
 
     /**
@@ -170,7 +171,9 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($request->property_type_id == 1 || $request->property_type_id = 3){
+
+        // dd($request->property_types_id);
+        if ($request->property_types_id == 1 || $request->property_types_id = 3){
             $validator = $request->validate([
                 'owners_id'   =>'required',
                 'property_types_id'       =>'required',
@@ -219,7 +222,7 @@ class ApartmentController extends Controller
 
         session()->flash('success','Data Update Successfully');
 
-        return redirect()->route('dashboard.owner',$request->property_type_id);
+        return redirect()->route('dashboard.owner',$request->property_types_id);
     }
 
     /**

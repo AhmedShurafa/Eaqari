@@ -64,7 +64,7 @@
                                     <td>{{$apartment->owner->name}}</td>
                                 @endif
                                 <td>
-                                    <div class="alert alert-info text-center font-weight-bold p-2" role="alert">
+                                    <div class="alert alert-success text-center font-weight-bold p-2" role="alert">
                                         {{$apartment->Property->name}}
                                     </div>
                                 </td>

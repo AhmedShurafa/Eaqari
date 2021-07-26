@@ -36,7 +36,6 @@
                             <input type="text" name="email" class="form-control"  value="{{$owner->email}}" id="email">
                         </div>
                     </div>
-
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="ssn" class="text-capitalize">ssn</label>

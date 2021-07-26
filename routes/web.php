@@ -66,7 +66,7 @@ Route::namespace("Dashboard\\")->name("dashboard.")
 
     Route::get('trashed/apartment','ApartmentController@trashed')->name('owner.trashed');
 
-    Route::get('restore/apartment/{id}','ApartmentController@restoreApartmentStatus')->name('restore.apartment.status');
+    Route::get('restore/apartment/{id}','ApartmentController@restoreApartmentStatus')->name('restore.apartment');
 
 
 });

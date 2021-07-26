@@ -17,8 +17,8 @@ class Transaction extends Model
         return $this->belongsTo('App\Models\Owner','owners_id')->withTrashed();
     }
 
-    public function apartment(){
-        return $this->belongsTo('App\Models\Properties','properties_id');
+    public function Properties(){
+        return $this->belongsTo('App\Models\Properties','properties_id')->withTrashed();
     }
 
     public function customer(){

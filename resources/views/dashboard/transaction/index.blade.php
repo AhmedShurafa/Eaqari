@@ -48,7 +48,7 @@
 
                                 <td>{{$transaction->owner->name}}</td>
                                 <td>
-                                   {{$transaction->apartment->Property->name}}
+                                   {{$transaction->Properties->name}}
                                 </td>
                                 <td>{{$transaction->customer->name}}</td>
                                 <td>{{$transaction->customer->phone}}</td>

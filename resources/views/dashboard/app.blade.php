@@ -142,6 +142,13 @@
 {{--            </li>--}}
             @else
 
+            <li class="nav-item {{Request::is('dashboard/admin*') ? 'active' : null }}">
+                <a class="nav-link" href="{{route("dashboard.index")}}">
+                    <i class="fas fa-fw fa-tachometer-alt" style="font-size: 20px"></i>
+                    <span style="font-size: 16px">الصفحة الرئيسية</span>
+                </a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-house-user" style="font-size: 20px"></i>
