@@ -62,7 +62,7 @@
 
                         <div class="form-group col" id="floor">
                             <label for="floor" class="text-capitalize">رقم الطابق</label>
-                            <input type="number" name="floor" class="form-control" required>
+                            <input type="number" name="floor" class="form-control">
                         </div>
                     </div>
 

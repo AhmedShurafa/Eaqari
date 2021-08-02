@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div>
-            <h1 class="h3 mb-4 text-gray-800 d-inline-block">المنشأت</h1>
+            <h1 class="h3 mb-4 text-gray-800 d-inline-block"> المنشأت - حواصل</h1>
             @if(!Auth::guard('web')->check())
                 <a href="{{route('dashboard.apartment.create')}}" class="btn btn-primary float-left">
                     <i class="fa fa-plus"></i>
@@ -30,6 +30,7 @@
                             <th>Price</th>
                             <th>Address</th>
                             @if(Auth::guard('web')->check())
+                                <th>نفعيل</th>
                                 <th>مشهور</th>
                             @endif
                             <th>Action</th>
@@ -47,6 +48,7 @@
                             <th>Price</th>
                             <th>Address</th>
                             @if(Auth::guard('web')->check())
+                                <th>نفعيل</th>
                                 <th>مشهور</th>
                             @endif
                             <th>Action</th>
@@ -80,19 +82,35 @@
                                 <td>{{Str::limit($apartment->address,20)}}</td>
 
                                 @if(Auth::guard('web')->check())
-                                    <td>
-                                        @if($apartment->famous == '0')
-                                            <a href="{{route('dashboard.apartment.famous',$apartment->id)}}" class="btn btn-warning">
-                                                No Active
-                                            </a>
-                                        @else
-                                            <a href="{{route('dashboard.apartment.famous',$apartment->id)}}" class="btn btn-secondary">
-                                                Active
-                                            </a>
-                                        @endif
-                                    </td>
-                                @endif
 
+                                <td>
+                                    @if($apartment->status == '0')
+                                        <a href="{{route('dashboard.apartment.stauts',$apartment->id)}}" class="btn btn-warning">
+                                            غير مفعل
+                                        </a>
+                                    @elseif($apartment->status == '1')
+                                        <a href="{{route('dashboard.apartment.stauts',$apartment->id)}}" class="btn btn-primary">
+                                            مفعل
+                                        </a>
+                                    @else
+                                        <p class="btn btn-primary text-white">
+                                            محذوف من قبل صاحب العقار
+                                        </p>
+                                    @endif
+                                </td>
+
+                                <td>
+                                    @if($apartment->famous == '0')
+                                        <a href="{{route('dashboard.apartment.famous',$apartment->id)}}" class="btn btn-warning">
+                                            غير مفعل
+                                        </a>
+                                    @else
+                                        <a href="{{route('dashboard.apartment.famous',$apartment->id)}}" class="btn btn-secondary">
+                                            مفعل
+                                        </a>
+                                    @endif
+                                </td>
+                                @endif
                                 <td>
                                     @if(Auth::guard('web')->check())
                                         <a href="{{route('dashboard.apartment.show',$apartment->id)}}"
@@ -100,19 +118,26 @@
                                             <i class="fa fa-eye"></i>
                                             Show
                                         </a>
+                                        <button class="btn btn-danger text-white shadow delete d-inline-block"
+                                                data-target='#custom-width-modal' data-toggle='modal'
+                                                data-row='{{route("dashboard.apartment.destroy",$apartment->id)}}'>
+                                            <i class="fa fa-trash"></i>
+                                            Suspend
+                                        </button>
                                     @else
                                         <a href="{{route('dashboard.apartment.edit',$apartment->id)}}"
-                                           class="btn btn-info text-white shadow">
+                                           class="btn btn-info tex  t-white shadow">
                                             <i class="fa fa-edit"></i>
                                             Edit
                                         </a>
-                                    @endif
-                                    <button class="btn btn-danger text-white shadow delete d-inline-block"
+
+                                        <button class="btn btn-danger text-white shadow delete d-inline-block"
                                             data-target='#custom-width-modal' data-toggle='modal'
                                             data-row='{{route("dashboard.apartment.stauts",$apartment->id)}}'>
                                         <i class="fa fa-trash"></i>
                                         Suspend
                                     </button>
+                                    @endif
 
                                 </td>
                             </tr>
@@ -134,6 +159,7 @@
     <script>
         $(".delete").click(function () {
             var id = $(this).data('row');
+            console.log(id);
             $('.modal_delete').attr('action',id);
         });
     </script>

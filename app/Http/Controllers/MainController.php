@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Models\Properties;
 use App\Models\Property_type;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ class MainController extends Controller
 {
     public function index(){
 
-        $apartment = Properties::with('owner')->where('famous','0')
+        $apartment = Properties::with('owner')->where(['famous'=>'0','status'=>'1'])
             ->orderby('created_at','DESC')->paginate(3);
 
         $place= Properties::with('owner')->where('famous','1')
@@ -18,7 +19,9 @@ class MainController extends Controller
 
         $property = Property_type::all();
 
-        return view('welcome',compact('apartment','place','property'));
+        $area = Area::all();
+
+        return view('welcome',compact('apartment','place','property','area'));
     }
 
     public function show($id){
@@ -34,21 +37,28 @@ class MainController extends Controller
 
     public function search(Request $request)
     {
-        $apartment = Properties::where([
-            ['address','like','%'.$request->place.'%'],
-//            ['type','=',$request->type_place],
-            ['size','>=',$request->size],
-            ['room_number','>=',$request->bedrooms],
-            ['price','>=',$request->price],
-        ])->paginate(6);
-
-//        dd($apartment);
+        $re = $request->except('_token');
+        $data = [];
+        foreach($request->except('_token') as $key => $value){
+            if($request[$key] != null){
+                $data[$key] = $value;
+            }
+        }
+        foreach($data as $k=> $v){
+            $apartment = Properties::where([
+                ["$k",'<=',$v],
+            ])->paginate(6);
+        }
 
         if(is_null($apartment)){
             $apartment = 'لا يوجد';
         }
+
+        $area = Area::all();
+        $search = '1';
+
         $property =Property_type::all();
-        return view('welcome',compact('apartment','property'));
+        return view('welcome',compact('apartment','property','area','search'));
     }
 
     public function famous()

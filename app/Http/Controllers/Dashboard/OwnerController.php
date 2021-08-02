@@ -73,7 +73,13 @@ class OwnerController extends Controller
      */
     public function update(Request $request, Owner $owner)
     {
-        //
+        $owner->update([
+            'evaluate' =>$request->evaluate,
+            'status'   =>$request->status,
+        ]);
+
+        session()->flash('success','Data Updated Successfully');
+        return redirect()->route('dashboard.owners.index');
     }
 
     /**

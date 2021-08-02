@@ -1,8 +1,8 @@
 <!-- Footer -->
 <footer id="main-footer" class="py-4 bg-primary text-white text-center" style="
-    position: relative;
-    width: 100%;
-    bottom: 0px;
+    position:absolute;
+    left:0px;
+    width:100%;
 ">
     Copyright &copy;
     <span class="year">2021</span> Eaqari

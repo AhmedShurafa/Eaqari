@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div>
-            <h1 class="h3 mb-4 text-gray-800 d-inline-block">السماسرة</h1>
+            <h1 class="h3 mb-4 text-gray-800 d-inline-block">المستثمرين</h1>
 
             <a href="{{route('dashboard.users.create')}}" class="btn btn-primary float-left">
                 <i class="fa fa-plus"></i>

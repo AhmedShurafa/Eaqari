@@ -42,8 +42,7 @@ class MessageController extends Controller
             'description' => 'required',
         ]);
 
-        $test = $request->except('_token');
-    //    dd($test);
+        $test = $request->except('_token');//remove token
         Message::create($test);
 
         session()->flash('success','تم إرسال الرسالة بنجاح');

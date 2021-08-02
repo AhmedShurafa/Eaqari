@@ -59,14 +59,20 @@
                   <i class="fas fa-money-bill-alt"></i> Asking Price:
                   <span class="float-right">{{$apartment->price}}</span>
                 </li>
+
+
+                @if ($apartment->property_types_id != 1)
+
                 <li class="list-group-item text-secondary">
-                  <i class="fas fa-bed"></i> Bedrooms:
-                  <span class="float-right">{{$apartment->room_number}}</span>
-                </li>
-                <li class="list-group-item text-secondary">
-                  <i class="fas fa-bath"></i> Bathrooms:
-                  <span class="float-right">{{$apartment->bathrooms}}</span>
-                </li>
+                    <i class="fas fa-bed"></i> Bedrooms:
+                    <span class="float-right">{{$apartment->room_number}}</span>
+                  </li>
+                  <li class="list-group-item text-secondary">
+                    <i class="fas fa-bath"></i> Bathrooms:
+                    <span class="float-right">{{$apartment->bathrooms}}</span>
+                  </li>
+
+                @endif
 {{--                <li class="list-group-item text-secondary">--}}
 {{--                  <i class="fas fa-car"></i> Garage:--}}
 {{--                  <span class="float-right">{{$apartment->garage}}--}}

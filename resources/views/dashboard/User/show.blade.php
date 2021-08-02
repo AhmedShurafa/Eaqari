@@ -38,10 +38,6 @@
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="phone" class="text-capitalize">رقم الجوال</label>
-                            <input type="text" name="phone" class="form-control" value="{{$user->phone}}" id="phone">
-                        </div>
-                        <div class="form-group col-md-6">
                             <label for="image" class="text-capitalize">الصورة الشخصية</label>
                             <input type="file" class="form-control" name="image" id="image">
                             <img id="blah" src="{{asset($user->image)}}" alt="your image" class="img-thumbnail w-50"/>

@@ -20,12 +20,12 @@ class CreatePropertiesTable extends Migration
             $table->unsignedBigInteger('property_types_id');
             $table->integer('price');
             $table->integer('size');
-            $table->integer('floor')->default(0);
+            $table->integer('floor')->nullable();
             $table->integer('room_number')->nullable();
             $table->integer('bathrooms')->nullable();
             $table->text('address');
             $table->mediumText('description');
-            $table->mediumText('status')->default(0);
+            $table->integer('status')->default(0);
             $table->longText('images')->nullable();
             $table->integer('famous')->default(0);
             $table->timestamps();

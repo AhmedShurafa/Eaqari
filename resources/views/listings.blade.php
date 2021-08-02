@@ -24,13 +24,18 @@
                         <div class="card listing-preview">
 {{--                            <img class="card-img-top" src="{{asset($apartment->images)}}" alt="">--}}
 
-                            @foreach(json_decode($apartment->images) as $key)
-                                @if($loop->first)
-                                    <img class="card-img-top figure-img rounded" style="height: 250px" src="{{$key}}" alt="">
-                                @else
-                                    @break
-                                @endif
-                            @endforeach
+                                    @if(!(is_null($apartment->images)))
+                                        @forelse(json_decode($apartment->images) as $key)
+                                            @if($loop->first)
+                                                <img class="card-img-top figure-img rounded" style="height: 250px;"
+                                                    src="{{asset($key)}}" alt="">
+                                            @else
+                                                @break
+                                            @endif
+                                        @empty
+                                            'لا يوجد'
+                                        @endforelse
+                                    @endif
                                         <div class="card-img-overlay">
                                             <h2>
                                                 <span class="badge badge-secondary text-white">$ {{$apartment->price}}</span>
@@ -38,7 +43,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="listing-heading text-center">
-{{--                                                <h4 class="text-primary">45 Drivewood Circle</h4>--}}
+                                                <p>{{$apartment->Property->name}}</p>
                                                 <p>
                                                     <i class="fas fa-map-marker text-secondary m-1"></i>{{Str::limit($apartment->address,20)}}</p>
                                             </div>
@@ -49,12 +54,18 @@
                                                 <div class="col-6">
                                                     <i class="fas fa-car"></i> Garage: {{$apartment->garage== '0' ? 'لا يوجد' : 'يوجد'}}</div>
                                             </div>
-                                            <div class="row py-2 text-secondary">
-                                                <div class="col-6">
-                                                    <i class="fas fa-bed"></i> Bedrooms: {{$apartment->room_number}}</div>
-                                                <div class="col-6">
-                                                    <i class="fas fa-bath"></i> Bathrooms: {{$apartment->bathrooms}}</div>
-                                            </div>
+                                            @if ($apartment->property_types_id != 1)
+
+                                                <div class="row py-2 text-secondary">
+                                                    <div class="col-6">
+                                                        <i class="fas fa-bed"></i> Bedrooms: {{ $apartment->room_number }}
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <i class="fas fa-bath"></i> Bathrooms: {{ $apartment->bathrooms }}
+                                                    </div>
+                                                </div>
+
+                                            @endif
                                             <hr>
                                             <div class="row py-2 text-secondary">
                                                 <div class="col-12">

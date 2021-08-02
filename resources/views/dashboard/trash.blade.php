@@ -72,7 +72,7 @@
                         <th scope="col">{{$apartment->price}}</th>
                         <th scope="col">{{Str::limit($apartment->address,30)}}</th>
                         <th scope="col">
-                            <a href="{{route('dashboard.restore.apartment' , $apartment->id)}}" class="btn btn-warning">
+                            <a href="{{route('dashboard.admin.restore.apartment' , $apartment->id)}}" class="btn btn-warning">
                                 <i class="fas fa-trash-restore"></i>
                                 استرداد
                             </a>
@@ -153,11 +153,11 @@
 
                         <td>{{$transaction->owner->name}}</td>
                         <td>
-                            {{$transaction->apartment->Property->name}}
+                            {{$transaction->Properties->Property->name}}
                         </td>
                         <td>{{$transaction->customer->name}}</td>
                         <td>{{$transaction->customer->phone}}</td>
-                        <td>{{$transaction->detalis}}</td>
+                        <td>{{$transaction->details}}</td>
 
                         <th scope="col">
                             <a href="{{route('dashboard.restore.Transaction' , $transaction->id)}}" class="btn btn-warning">

@@ -35,8 +35,6 @@ Route::namespace("Dashboard\\")->name("dashboard.")
         Route::middleware('auth:web')->group(function(){
             Route::resource('owners','OwnerController');
         });
-
-
     Route::resource('users','UserController');
 
     Route::get('apartment/type/{id}','ApartmentController@typeApartment')->name('apartment.type');
@@ -45,13 +43,15 @@ Route::namespace("Dashboard\\")->name("dashboard.")
 
     Route::get('apartment/famous/{row}','ApartmentController@changeFamous')->name("apartment.famous");
 
-    Route::Delete('apartment/stauts/{row}','ApartmentController@stauts')->name("apartment.stauts");
+    Route::get('apartment/stauts/{row}','ApartmentController@stauts')->name("apartment.stauts");
+
+    // Route::get('apartment/stauts/{row}','ApartmentController@stauts')->name("apartment.stauts");
 
     Route::get('trash','DashboardController@getAllTrashed')->name('trashed');
 
     Route::get('restore/owner/{id}','DashboardController@restoreOwner')->name('restore.owner');
 
-    Route::get('restore/apartment/{id}','DashboardController@restoreApartment')->name('restore.apartment');
+    Route::get('restore/apartment/{id}','DashboardController@restoreApartment')->name('admin.restore.apartment');
 
     Route::get('restore/message/{id}','DashboardController@restoreMessage')->name('restore.message');
 
@@ -64,9 +64,10 @@ Route::namespace("Dashboard\\")->name("dashboard.")
 
     Route::get('edit/apartment/{id}','ApartmentController@edit')->name('owner.edit');
 
+    Route::get('trashed/apartment','ApartmentController@trashed')->name('trashed.apartment');
     Route::get('trashed/apartment','ApartmentController@trashed')->name('owner.trashed');
 
-    Route::get('restore/apartment/{id}','ApartmentController@restoreApartmentStatus')->name('restore.apartment');
+    Route::get('restore/Myapartment/{id}','ApartmentController@restoreApartmentStatus')->name('restore.apartment');
 
 
 });

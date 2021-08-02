@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div>
-            <h1 class="h3 mb-4 text-gray-800 d-inline-block">السماسرة</h1>
+            <h1 class="h3 mb-4 text-gray-800 d-inline-block">المستثمرين</h1>
 
 {{--            <a href="{{route('dashboard.users.create')}}" class="btn btn-primary float-left">--}}
 {{--                <i class="fa fa-plus"></i>--}}
@@ -41,17 +41,26 @@
                         </tfoot>
                         <tbody>
                         @foreach($owners as $owner)
-                            <tr>
-                                <td>{{$owner->id}}</td>
+                            <tr @if($owner->status == 0) style="background:#eee" @endif>
+                                <td>{{$owner->id}} <br> @if($owner->status == 0)غير مفعل @endif</td>
+
                                 <td>{{$owner->name}}</td>
                                 <td>{{$owner->email}}</td>
                                 <td>{{$owner->phone}}</td>
                                 <td>{{$owner->ssn}}</td>
-{{--                                <td>--}}
-{{--                                    <h3 class="btn btn-primary">--}}
-{{--                                        <span class="badge badge-light">{{$owner->evaluate}}</span>--}}
-{{--                                    </h3>--}}
-{{--                                </td>--}}
+                                {{-- <td>
+                                    @if($owner->status == 0)
+                                        <a href="{{route('dashboard.owners.show',$owner->id)}}"
+                                            class="btn btn-success text-white shadow">
+                                            تفعيل
+                                        </a>
+                                    @else
+                                        <a href="{{route('dashboard.owners.show',$owner->id)}}"
+                                            class="btn btn-success text-white shadow">
+                                            إلغاء التفعيل
+                                        </a>
+                                    @endif
+                                </td> --}}
                                 <td>
                                     <a href="{{route('dashboard.owners.show',$owner->id)}}"
                                        class="btn btn-success text-white shadow">

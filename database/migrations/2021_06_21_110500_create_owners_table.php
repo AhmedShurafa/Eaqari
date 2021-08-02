@@ -23,6 +23,7 @@ class CreateOwnersTable extends Migration
             $table->integer('ssn');
             $table->integer('evaluate')->default(0);
             $table->text('image')->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
         });

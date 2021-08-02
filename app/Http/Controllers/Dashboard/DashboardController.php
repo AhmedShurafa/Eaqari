@@ -31,16 +31,17 @@ class DashboardController extends Controller
             return view('dashboard.index',compact('home','floor','gar'));
         }
     }
+
     public function getAllTrashed(){
 
         $owners      = Owner::onlyTrashed()->get();
         $apartments  = Properties::onlyTrashed()->with('owner')->get();
-        $messages      = Message::onlyTrashed()->with('owner','apartment','customer')->get();
-        $transactions      = Transaction::onlyTrashed()->with('owner','apartment','customer')->get();
-
+        $messages    = Message::onlyTrashed()->with('owner','apartment','customer')->get();
+        $transactions= Transaction::onlyTrashed()->with('owner','Properties','customer')->get();
         return view('dashboard.trash',compact('owners','apartments','messages','transactions'));
 
     }
+
     public function restoreOwner($id){
 
         Owner::withTrashed()->where('id',$id)->restore();

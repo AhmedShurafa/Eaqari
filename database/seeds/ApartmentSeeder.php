@@ -26,11 +26,12 @@ class ApartmentSeeder extends Seeder
                 'price' => $faker->numberBetween(20000,50000),
                 'size' => $faker->numberBetween(100,200),
                 'floor' => $faker->numberBetween(1,10),
+                'status' => '0',
                 'room_number' => $faker->numberBetween(1,5),
                 'bathrooms' =>$faker->numberBetween(1,3),
                 'address' => $faker->sentence(10),
                 'description' => $faker->sentence(20),
-                'image' => $faker->imageUrl(),
+                'images' => $faker->imageUrl(),
                 'famous' =>rand(0,1)
             ]);
         }

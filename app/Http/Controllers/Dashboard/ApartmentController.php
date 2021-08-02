@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ApartmentController extends Controller
 {
+    function __construct()
+    {
+        // admin only
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +40,9 @@ class ApartmentController extends Controller
 
                     // dd($apartments);
 
-                return view("dashboard.apartment.warehouse",compact("apartments"));
+                    $title = 'حواصل';
+
+                return view("dashboard.apartment.warehouse",compact("apartments",'title'));
 
             }elseif ($id=="2" || $id == "منزل"){ //home 3
 
@@ -44,14 +51,19 @@ class ApartmentController extends Controller
                         $q->where('id',2);
                     })->get();
 
-                return view("dashboard.apartment.apartment",compact("apartments"));
+                    $title = 'منازل';
+
+                return view("dashboard.apartment.apartment",compact("apartments",'title'));
 
             }elseif ($id=="3" || $id == "شقة"){// flat 2
                 $apartments = Properties::with('owner')->with('area')
                     ->WhereHas('Property',function ($q) use($id){
                         $q->where('id',3);
                     })->get();
-                return view("dashboard.apartment.flat",compact("apartments"));
+
+                    $title = 'شقق';
+
+                return view("dashboard.apartment.flat",compact("apartments",'title'));
             }else{
                 return view("dashboard.404");
             }
@@ -218,10 +230,7 @@ class ApartmentController extends Controller
             $apartment['images'] = json_encode($data);
         }
         Properties::find($id)->update($apartment);
-
-
         session()->flash('success','Data Update Successfully');
-
         return redirect()->route('dashboard.owner',$request->property_types_id);
     }
 
@@ -240,10 +249,18 @@ class ApartmentController extends Controller
 
     public function stauts($id)
     {
-        Properties::findOrFail($id)->update([
-            'status' => 2
-        ]);
-        session()->flash('success','Data Deleted Successfully');
+        $property = Properties::findOrFail($id);
+        if($property->status == 0){
+            $property->update([
+                'status' => 1
+            ]);
+        }elseif($property->status == 1){
+            $property->update([
+                'status' => 0
+            ]);
+        }
+
+        session()->flash('success','Data Updated Successfully');
         return redirect()->back();
     }
 
@@ -257,7 +274,10 @@ class ApartmentController extends Controller
                 ->WhereHas('Property',function ($q){
                     $q->where('name','حاصل');
                 })->where('owners_id',Auth::guard('owner')->user()->id)->where('status','<>','2')->get();
-            return view("dashboard.apartment.warehouse",compact("apartments"));
+
+            $title = 'حواصل';
+
+            return view("dashboard.apartment.warehouse",compact("apartments",'title'));
 
         }elseif ($id == "منازل" || $id == 2){
 
@@ -265,7 +285,10 @@ class ApartmentController extends Controller
                 ->WhereHas('Property',function ($q) use($id){
                     $q->where('name','منزل');
                 })->where('owners_id',Auth::guard('owner')->user()->id)->where('status','<>','2')->get();
-            return view("dashboard.apartment.apartment",compact("apartments"));
+
+                $title = 'منازل';
+
+                return view("dashboard.apartment.apartment",compact("apartments",'title'));
 
         }elseif ($id == "شقق" || $id == 3){
 
@@ -273,7 +296,10 @@ class ApartmentController extends Controller
                 ->WhereHas('Property',function ($q){
                     $q->where('name','شقة');
                 })->where('owners_id',Auth::guard('owner')->user()->id)->where('status','<>','2')->get();
-            return view("dashboard.apartment.flat",compact("apartments"));
+
+            $title = 'شقق';
+
+            return view("dashboard.apartment.flat",compact("apartments",'title'));
         }else{
             abort(404);
         }

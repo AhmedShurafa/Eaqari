@@ -165,7 +165,7 @@ class UserController extends Controller
                 'email'     => 'required|email|'.Rule::unique('owners')->ignore(Auth::guard('owner')->user()->id),
                 'password'  => 'confirmed',
                 'phone'     => 'required|string',
-                'phone2'    => 'required|string',
+                'phone2'    => 'string',
                 'ssn'       => 'required|integer',
 //                'image'     => 'mimes:jpeg,png',
             ]);
@@ -176,15 +176,12 @@ class UserController extends Controller
                 $imageOwner->move("public/avatars/",$image_new_Owner);
                 $filePath = "public/avatars/" . $image_new_Owner;
             }
-
             $owner = Owner::findOrFail($id);
-
             if($validator->fails()) {
                 return redirect()->back()
                     ->withErrors($validator)
                     ->withInput();
             }
-
             if (isset($request->password)){
                 if (!Hash::check($request->current_password, $owner->password)) {
                     return back()->with('error', 'Current password does not match!');
@@ -195,10 +192,8 @@ class UserController extends Controller
 
                 $data = $request->except('password','current_password','password_confirmation');
             }
-
             $data['image'] = isset($filePath) ? $filePath : $owner->image;
             $owner->update($data);
-
             session()->flash('success','Data Update Successfully');
             return view("dashboard.User.profile",compact('owner'));
         }
@@ -230,7 +225,7 @@ class UserController extends Controller
             'email'     => 'required|email',
             'password'  => 'required|confirmed',
             'phone'     => 'required|string',
-            'phone2'    => 'required|string',
+            'phone2'    => 'string',
             'ssn'       => 'required|integer',
             'image'     => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
@@ -243,7 +238,7 @@ class UserController extends Controller
             'name'      => 'required|min:2',
             'email'     => 'required|email|'.Rule::unique('owners')->ignore($user->id),
             'phone'     => 'required|string',
-            'phone2'    => 'required|string',
+            'phone2'    => 'string',
             'ssn'       => 'required|integer',
             'image'     => 'sometimes|files|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
